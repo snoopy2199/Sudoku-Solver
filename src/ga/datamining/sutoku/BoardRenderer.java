@@ -206,6 +206,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	
 	// 取得是否預設內容
 	public boolean isDefaultContent(int x, int y) {
+		if(x == 0 || y == 0) return false;
 		if(defaultContent[(y-1)*9 + (x-1)] == 0)
 			return false;
 		else return true;
@@ -220,9 +221,9 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		MOUSE_POS_RAW_X = e.getX();
 		MOUSE_POS_RAW_Y = e.getY();
 		
-		if (MOUSE_POS_RAW_X < GRID_MIN || MOUSE_POS_RAW_X > GRID_MAX) MOUSE_POS_X = 0;
+		if (MOUSE_POS_RAW_X < GRID_MIN || MOUSE_POS_RAW_X > GRID_MAX - 1) MOUSE_POS_X = 0;
 		else MOUSE_POS_X = (MOUSE_POS_RAW_X - GRID_MIN) / GRID_SIZE + 1;
-		if (MOUSE_POS_RAW_Y < GRID_MIN || MOUSE_POS_RAW_Y > GRID_MAX) MOUSE_POS_Y = 0;
+		if (MOUSE_POS_RAW_Y < GRID_MIN || MOUSE_POS_RAW_Y > GRID_MAX - 1) MOUSE_POS_Y = 0;
 		else MOUSE_POS_Y = (MOUSE_POS_RAW_Y - GRID_MIN) / GRID_SIZE + 1;
 		
 		this.repaint();
