@@ -226,6 +226,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		if (MOUSE_POS_RAW_Y < GRID_MIN || MOUSE_POS_RAW_Y > GRID_MAX - 1) MOUSE_POS_Y = 0;
 		else MOUSE_POS_Y = (MOUSE_POS_RAW_Y - GRID_MIN) / GRID_SIZE + 1;
 		
+		if(MOUSE_POS_X == 0 || MOUSE_POS_Y == 0) MOUSE_POS_X = MOUSE_POS_Y = 0;
+		
 		this.repaint();
 	}
 
@@ -250,7 +252,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		mouseDown = false;
 		
 		if (ENABLE_REMBER_LAST && !isDefaultContent(MOUSE_POS_X, MOUSE_POS_Y)) {
-			if( lastClick != null && lastClick.x == MOUSE_POS_X && lastClick.y == MOUSE_POS_Y)
+			if( (lastClick != null && lastClick.x == MOUSE_POS_X && lastClick.y == MOUSE_POS_Y)
+					|| MOUSE_POS_X == 0 || MOUSE_POS_Y == 0)
 				lastClick = null;
 			else lastClick = new Point(MOUSE_POS_X, MOUSE_POS_Y);
 		}
