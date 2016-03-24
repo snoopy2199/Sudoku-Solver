@@ -5,34 +5,49 @@ import javax.swing.*;
 
 public class Sutoku {
 
-	static int size_width 	= 1400;
-	static int size_height = 900;
+	// Sutoku static ===============================================================
+	
+	static int size_width  = 1000;
+	static int size_height = 730;
 	
 	private static Sutoku sutoku = null;
 	
-	public static Sutoku get() {return sutoku==null?(sutoku = new Sutoku()):sutoku;}
+	public static Sutoku get() {return sutoku == null ? (sutoku = new Sutoku()) : sutoku;}
 	
 	public static void main(String[] args) {
-		// ¥Dµ{¦¡¸ü¤J
-
-		// «Ø¥ßµøµ¡
-		Sutoku.get().createWindow();
+		// é€²å…¥ä¸»ç¨‹å¼
+		Sutoku.get();
+		
 	}
 	
-	JFrame window = new JFrame();
-	BoardRenderer boardRenderer  = new BoardRenderer();	// JPanel
+	// Sutoku class  ===============================================================
+	
+	JFrame window = new JFrame("Sutoku Solver");
+	BoardRenderer boardRenderer  = new BoardRenderer();
+	
+	public Sutoku() {
+		this.createWindow(); // å»ºç«‹è¦–çª—
+	}
 	
 	public void createWindow() {
-		
+
 		window.setSize(size_width, size_height);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Ãö³¬«á¥Dµ{¦¡·|¸òµÛÃö³¬
-		window.setLocationRelativeTo(null);						// µøµ¡¶}±Ò«á·|¦b¿Ã¹õ¤¤¥¡
+		window.setPreferredSize(new Dimension(size_width, size_height));
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// é—œé–‰è¦–çª—æ™‚é›¢é–‹ä¸»ç¨‹å¼
+		window.setLocationRelativeTo(null);						// é–‹å•Ÿæ™‚é¡¯ç¤ºæ–¼è¢å¹•æ­£ä¸­å¤®
+		window.setAlwaysOnTop(true);							// é¡¯ç¤ºæ–¼æœ€ä¸Šæ–¹
+		window.setResizable(false);								// ä¸å¯è¢«èª¿æ•´å¤§å°
 		
-		// ¥[¤J¤¸¥ó
-		window.add(boardRenderer);	// ´Ñ½L
-		//...	// ¹Ïªí
+		Container mainPanel = window.getContentPane();
+		mainPanel.setBackground(Color.GRAY);
+		mainPanel.setLayout(null);
 		
-		// Åã¥Üµøµ¡
+		// æ–°å¢é¢æ¿
+		mainPanel.add(boardRenderer);	// æ£‹ç›¤ 600*600  ä½ç½® 50*50
+		//...	// å…¶ä»– 250*600  ä½ç½® 50*700
+		
+		// é¡¯ç¤ºè¦–çª—
+		window.pack();
 		window.setVisible(true);
 	}
 
