@@ -51,24 +51,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D) g;	// 開始2D繪圖設置
-		
-		// 外框
-		g2.setStroke(new BasicStroke(SPLIT_LINE));
-		g.drawLine(GRID_MIN,GRID_MIN,GRID_MAX,GRID_MIN);
-		g.drawLine(GRID_MAX,GRID_MIN,GRID_MAX,GRID_MAX);
-		g.drawLine(GRID_MAX,GRID_MAX,GRID_MIN,GRID_MAX);
-		g.drawLine(GRID_MIN,GRID_MAX,GRID_MIN,GRID_MIN);
-		
-		// 內框
-		g2.setStroke(NORMAL_STROKE);
-		for(int i = GRID_MIN + GRID_SIZE, count = 0; i < GRID_MAX; i += GRID_SIZE, count++) {
-			if (count == 2 || count == 5) g2.setStroke(SPLIT_STROKE);
-			
-			g.drawLine(i ,GRID_MIN,i ,GRID_MAX);
-			g.drawLine(GRID_MIN, i, GRID_MAX, i);
-			g2.setStroke(NORMAL_STROKE);
-		}
-		
+
 		// 高亮最後按下的位置
 		if(ENABLE_REMBER_LAST && lastClick != null && !isDefaultContent(lastClick.x, lastClick.y)) {
 			g.setColor(Color.decode("#ef9a9a"));
@@ -129,7 +112,24 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		g.setFont(SMALL_FONT);
 		g.setColor(Color.BLACK);
 		
+		// 外框
+		g2.setStroke(new BasicStroke(SPLIT_LINE));
+		g.drawLine(GRID_MIN,GRID_MIN,GRID_MAX,GRID_MIN);
+		g.drawLine(GRID_MAX,GRID_MIN,GRID_MAX,GRID_MAX);
+		g.drawLine(GRID_MAX,GRID_MAX,GRID_MIN,GRID_MAX);
+		g.drawLine(GRID_MIN,GRID_MAX,GRID_MIN,GRID_MIN);
+				
+		// 內框
+		g2.setStroke(NORMAL_STROKE);
+		for(int i = GRID_MIN + GRID_SIZE, count = 0; i < GRID_MAX; i += GRID_SIZE, count++) {
+			if (count == 2 || count == 5) g2.setStroke(SPLIT_STROKE);
+					
+			g.drawLine(i ,GRID_MIN,i ,GRID_MAX);
+			g.drawLine(GRID_MIN, i, GRID_MAX, i);
+			g2.setStroke(NORMAL_STROKE);
+		}
 		
+		// 資訊
 		g2.drawString(String.format("mouse pos:%d:%d    mouse loc:%d:%d"
 				+ "    last pos:%d:%d", 
 				MOUSE_POS_RAW_X, MOUSE_POS_RAW_Y, MOUSE_POS_X, MOUSE_POS_Y,
