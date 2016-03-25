@@ -24,12 +24,16 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public static int MOUSE_POS_Y = 0;		//滑鼠棋盤位置
 	public static boolean HOVER_EFFECT = true;			// 滑過是否高亮
 	public static boolean ENABLE_REMBER_LAST = true; 	// 是否紀錄最後按下的方塊
+	public static int BIG_FONT_SIZE 	= 50;	// 棋盤數字大小
+	public static int SMALL_FONT_SIZE 	= 12;	// 一般文字大小
+	public static int BIG_FONT_OFFSET 	= 35;	// 棋盤數字偏移矯正
+	public static boolean SHOW_INFO 	= true; // 是否顯示棋盤定位資訊
 	
 	// 取得畫筆物件
 	private static BasicStroke NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
 	private static BasicStroke SPLIT_STROKE	 = new BasicStroke(SPLIT_LINE);
-	private static Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, 50);
-	private static Font SMALL_FONT 	= new Font("TimesRoman", Font.PLAIN, 12);
+	private static Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
+	private static Font SMALL_FONT 	= new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
 	
 	// 紀錄數值 0為空 1-9為顯示數字
 	private int defaultContent [] = new int [81];
@@ -101,12 +105,12 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 				g.setColor(Color.BLACK);
 				g2.drawString(String.valueOf(defaultContent[i]),
 						i % 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE), 
-						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + 35);
+						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
 			} else if (content[i] != 0) {
 				g.setColor(Color.BLUE);
 				g2.drawString(String.valueOf(content[i]),
 						i % 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE), 
-						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + 35);
+						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
 			}
 		}
 		g.setFont(SMALL_FONT);
@@ -130,10 +134,11 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		}
 		
 		// 資訊
-		g2.drawString(String.format("mouse pos:%d:%d    mouse loc:%d:%d"
+		if(SHOW_INFO)
+			g2.drawString(String.format("mouse pos:%d:%d    mouse loc:%d:%d"
 				+ "    last pos:%d:%d", 
 				MOUSE_POS_RAW_X, MOUSE_POS_RAW_Y, MOUSE_POS_X, MOUSE_POS_Y,
-				lastClick==null?0:lastClick.x, lastClick==null?0:lastClick.y), 30, 20
+				lastClick==null?0:lastClick.x, lastClick==null?0:lastClick.y), GRID_MIN, GRID_MIN / 3 * 2
 				);
 		
 		
