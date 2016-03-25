@@ -3,20 +3,20 @@ package ga.datamining.sutoku;
 import java.awt.*;
 import javax.swing.*;
 
-public class Sutoku {
+public class Sudoku {
 
 	// Sutoku static ===============================================================
 	
 	static int size_width  = 1000;
 	static int size_height = 730;
 	
-	private static Sutoku sutoku = null;
+	private static Sudoku sutoku = null;
 	
-	public static Sutoku get() {return sutoku == null ? (sutoku = new Sutoku()) : sutoku;}
+	public static Sudoku get() {return sutoku == null ? (sutoku = new Sudoku()) : sutoku;}
 	
 	public static void main(String[] args) {
 		// 進入主程式
-		Sutoku.get();
+		Sudoku.get();
 		
 	}
 	
@@ -25,7 +25,7 @@ public class Sutoku {
 	JFrame window = new JFrame("Sutoku Solver");
 	BoardRenderer boardRenderer  = new BoardRenderer();
 	
-	public Sutoku() {
+	public Sudoku() {
 		this.createWindow(); // 建立視窗
 	}
 	
