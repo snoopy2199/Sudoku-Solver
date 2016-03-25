@@ -9,31 +9,31 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	
 	private static final long serialVersionUID = -2233346051421465237L;
 
-	public static int SIZE_WIDTH  	= 600;	// 背景寬度
-	public static int SIZE_HEIGHT 	= 600;	// 背景高度
-	public static int LOC_TOP 		= 50;	// 棋盤距離上方
-	public static int LOC_LEFT 		= 50;	// 棋盤距離左方
-	public static int GRID_SIZE 	= 60;	// 棋格大小
-	public static int GRID_MIN 		= 30;	// 棋盤最小偏移(距離邊界)
-	public static int GRID_MAX 		= 570;	// 棋盤最大偏移(距離邊界)
-	public static float NORMAL_LINE = 1.0f;	// 普通線寬度
-	public static float SPLIT_LINE 	= 2.0f;	// 特殊線寬度
-	public static int MOUSE_POS_RAW_X = 0;	//滑鼠座標
-	public static int MOUSE_POS_RAW_Y = 0;	//滑鼠座標
-	public static int MOUSE_POS_X = 0;		//滑鼠棋盤位置
-	public static int MOUSE_POS_Y = 0;		//滑鼠棋盤位置
-	public static boolean HOVER_EFFECT = true;			// 滑過是否高亮
-	public static boolean ENABLE_REMBER_LAST = true; 	// 是否紀錄最後按下的方塊
-	public static int BIG_FONT_SIZE 	= 50;	// 棋盤數字大小
-	public static int SMALL_FONT_SIZE 	= 12;	// 一般文字大小
-	public static int BIG_FONT_OFFSET 	= 35;	// 棋盤數字偏移矯正
-	public static boolean SHOW_INFO 	= true; // 是否顯示棋盤定位資訊
+	public int SIZE_WIDTH  		= 600;	// 背景寬度
+	public int SIZE_HEIGHT 		= 600;	// 背景高度
+	public int LOC_TOP 			= 50;	// 棋盤距離上方
+	public int LOC_LEFT 		= 50;	// 棋盤距離左方
+	public int GRID_SIZE 		= 60;	// 棋格大小
+	public int GRID_MIN 		= 30;	// 棋盤最小偏移(距離邊界)
+	public int GRID_MAX 		= 570;	// 棋盤最大偏移(距離邊界)
+	public float NORMAL_LINE 	= 1.0f;	// 普通線寬度
+	public float SPLIT_LINE 	= 2.0f;	// 特殊線寬度
+	public int MOUSE_POS_RAW_X 	= 0;	//滑鼠座標
+	public int MOUSE_POS_RAW_Y 	= 0;	//滑鼠座標
+	public int MOUSE_POS_X 		= 0;	//滑鼠棋盤位置
+	public int MOUSE_POS_Y 		= 0;	//滑鼠棋盤位置
+	public boolean HOVER_EFFECT = true;			// 滑過是否高亮
+	public boolean ENABLE_REMBER_LAST = true; 	// 是否紀錄最後按下的方塊
+	public int BIG_FONT_SIZE 	= 50;	// 棋盤數字大小
+	public int SMALL_FONT_SIZE 	= 12;	// 一般文字大小
+	public int BIG_FONT_OFFSET 	= 35;	// 棋盤數字偏移矯正
+	public boolean SHOW_INFO 	= true; // 是否顯示棋盤定位資訊
 	
 	// 取得畫筆物件
-	private static BasicStroke NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
-	private static BasicStroke SPLIT_STROKE	 = new BasicStroke(SPLIT_LINE);
-	private static Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
-	private static Font SMALL_FONT 	= new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
+	private BasicStroke NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
+	private BasicStroke SPLIT_STROKE	 = new BasicStroke(SPLIT_LINE);
+	private Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
+	private Font SMALL_FONT 	= new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
 	
 	// 紀錄數值 0為空 1-9為顯示數字
 	private int defaultContent [] = new int [81];
