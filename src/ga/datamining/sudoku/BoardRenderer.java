@@ -30,10 +30,10 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public boolean SHOW_INFO 	= true; // 是否顯示棋盤定位資訊
 	
 	// 取得畫筆物件
-	private BasicStroke NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
-	private BasicStroke SPLIT_STROKE	 = new BasicStroke(SPLIT_LINE);
+	private BasicStroke NORMAL_STROKE 	= new BasicStroke(NORMAL_LINE);
+	private BasicStroke SPLIT_STROKE	= new BasicStroke(SPLIT_LINE);
 	private Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
-	private Font SMALL_FONT 	= new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
+	private Font SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
 	
 	// 紀錄數值 0為空 1-9為顯示數字
 	private int defaultContent [] = new int [81];
@@ -95,8 +95,6 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 			}
 		}
 		
-		defaultContent[10] = 3;
-		content[66] = 8;
 		// 數字
 		g.setFont(BIG_FONT);
 		for(int i = 0; i < 81; i++) {
