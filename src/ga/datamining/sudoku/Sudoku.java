@@ -1,4 +1,4 @@
-package ga.datamining.sutoku;
+package ga.datamining.sudoku;
 
 import java.awt.*;
 import javax.swing.*;
@@ -22,7 +22,7 @@ public class Sudoku {
 	
 	// Sutoku class  ===============================================================
 	
-	JFrame window = new JFrame("Sutoku Solver");
+	JFrame window = new JFrame("Sudoku Solver");
 	BoardRenderer boardRenderer  = new BoardRenderer();
 	
 	public Sudoku() {
