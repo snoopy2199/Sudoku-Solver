@@ -10,9 +10,9 @@ public class Sudoku {
 	static int size_width  = 1000;
 	static int size_height = 730;
 	
-	private static Sudoku sutoku = null;
+	private static Sudoku sudoku = null;
 	
-	public static Sudoku get() {return sutoku == null ? (sutoku = new Sudoku()) : sutoku;}
+	public static Sudoku get() {return sudoku == null ? (sudoku = new Sudoku()) : sudoku;}
 	
 	public static void main(String[] args) {
 		// 進入主程式
