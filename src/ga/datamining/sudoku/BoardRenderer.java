@@ -38,7 +38,6 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	// 紀錄數值 0為空 1-9為顯示數字
 	private int defaultContent [] = new int [81];
 	private int content [] = new int [81];
-	
 	private boolean mouseDown = false;	// 滑鼠是否按下中
 	private Point lastClick = null;		// 最後按下的位置
 	
@@ -46,7 +45,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.setBackground(Color.WHITE);
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
-		this.setLocation(LOC_TOP, LOC_LEFT);
+		this.setLocation(LOC_LEFT, LOC_TOP);
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
 	}
@@ -153,6 +152,12 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public void clearFilled() {
 		content = new int[81];
 		this.repaint();
+	}
+	
+	public void setToDefault() {
+		defaultContent = content;
+		this.repaint();
+		
 	}
 	
 	// 設置預設數字(非必要=0)，數字顏色也會不同
