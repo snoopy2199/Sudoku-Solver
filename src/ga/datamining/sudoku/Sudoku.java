@@ -55,10 +55,14 @@ public class Sudoku {
 		return getNextBlankPos(p.x, p.y);
 	}
 	
-	// 算出共有幾條線符合規則
+	// 算出共有幾個符合規則
 	public int getPoint() {
 		// TODO
 		return 0;
 	}
 	
+	public boolean isComplete() {
+		if(getPoint() == 29) return true;
+		else return false;
+	}
 }

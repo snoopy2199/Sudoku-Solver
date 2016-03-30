@@ -9,6 +9,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	
 	private static final long serialVersionUID = -2233346051421465237L;
 
+	// 請不要直接改動預設值，若有需要修改請繼承此類別，並於子類別建構子中使用 super.SIZE_WIDTH 等重設參數
+	
 	public int SIZE_WIDTH  		= 600;	// 背景寬度
 	public int SIZE_HEIGHT 		= 600;	// 背景高度
 	public int LOC_TOP 			= 50;	// 棋盤距離上方

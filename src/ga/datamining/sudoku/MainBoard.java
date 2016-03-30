@@ -13,7 +13,7 @@ public class MainBoard extends BoardRenderer {
 		super.SIZE_HEIGHT 	= 600;
 		super.LOC_TOP		= 50;
 		super.LOC_LEFT		= 50;
-		
+		// 其餘按照預設值
 	}
 	
 }
