@@ -14,7 +14,6 @@ public class MainBoard extends BoardRenderer {
 		super.LOC_TOP		= 50;
 		super.LOC_LEFT		= 50;
 		
-		
 	}
 	
 }

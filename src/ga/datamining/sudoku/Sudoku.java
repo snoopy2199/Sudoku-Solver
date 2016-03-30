@@ -10,31 +10,55 @@ public class Sudoku {
 		return sudoku == null ? sudoku = new Sudoku() : sudoku;
 	}
 	
-	private int [][] data = new int [9][9];
+	private int [][] _data = new int [9][9];
 	
 	public Sudoku() {
 		
 	}
 	
-	public void setData(int x, int y, int data) {
-		
+	// 設定值，若data為0，則表示那格沒有填入
+	public boolean setData(int x, int y, int data) {
+		if (x > 9 || x < 1 || y > 9 || y < 1 || data > 9 || data < 0)
+			return false;
+		_data [x][y] = data;
+		return true;
 	}
 	
-	public void setData(Point pos, int data) {
-		
-		setData(pos.x, pos.y, data);
+	public boolean setData(Point pos, int data) {
+		return setData(pos.x, pos.y, data);
 	}
 	
+	// 取得值
 	public int getData(int x, int y) {
-		
-		return 0;
+		if (x > 9 || x < 1 || y > 9 || y < 1)
+			return -1;
+		return _data[x][y];
 	}
 	
 	public int getData(Point pos) {
-		
 		return getData(pos.x, pos.y);
 	}
 	
+	// 重設
+	public void clear() {
+		_data = new int [9][9];
+	}
 	
+	// 取得特定位置後的下一個空白位置
+	public int getNextBlankPos(int x, int y) {
+		// TODO
+		return 0;
+		
+	}
+	
+	public int getNextBlankPos(Point p) {
+		return getNextBlankPos(p.x, p.y);
+	}
+	
+	// 算出共有幾條線符合規則
+	public int getPoint() {
+		// TODO
+		return 0;
+	}
 	
 }
