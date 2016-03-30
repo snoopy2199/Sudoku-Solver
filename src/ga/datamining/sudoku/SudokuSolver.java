@@ -25,7 +25,7 @@ public class SudokuSolver extends JFrame {
 	
 	// Sutoku class  ===============================================================
 	
-	private BoardRenderer boardRenderer  = new BoardRenderer();
+	private MainBoard mainBoard  = new MainBoard();
 	
 	public SudokuSolver (String title) {
 		super(title);
@@ -46,7 +46,7 @@ public class SudokuSolver extends JFrame {
 		mainPanel.setLayout(null);
 		
 		// 新增面板
-		mainPanel.add(boardRenderer);	// 棋盤 600*600  位置 50*50
+		mainPanel.add(mainBoard);	// 棋盤 600*600  位置 50*50
 		//...	// 其他 250*600  位置 50*700
 		
 		// 顯示視窗
