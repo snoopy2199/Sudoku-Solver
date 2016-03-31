@@ -61,13 +61,18 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 
 	public BoardRenderer(BoardType type) {
 		if(type == BoardType.MAIN_BOARD) {
-			SIZE_WIDTH = 400;
+			SIZE_WIDTH  = 400;
 			SIZE_HEIGHT = 400;
 			setBoardGrid(40, 20);
 		} else if(type == BoardType.SMALL_BOARD) {
-			// 小棋盤設定
-			
-			
+			SIZE_WIDTH  = 150;
+			SIZE_HEIGHT = 150;
+			LOC_TOP     = 18;
+			LOC_LEFT    = 10;
+			setBoardGrid(15, 10);
+			SHOW_INFO   = false;
+			HOVER_EFFECT = false;
+			ENABLE_REMBER_LAST = false;
 		}
 		resetBoard();
 	}
