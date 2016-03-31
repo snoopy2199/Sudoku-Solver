@@ -47,23 +47,19 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	private Point lastClick = null;		// 最後按下的位置
 	
 	public BoardRenderer() {
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
 		resetBoard();
 	}
 	
 	public BoardRenderer(int width, int height, int left, int top, boolean isHighLightAndHover, int fontSize, int fontOffset) {
-		this();
 		setBoardSize(width, height);
 		setBoardLoc(left, top);
 		setHoverEffect(isHighLightAndHover);
 		setRememberLast(isHighLightAndHover);
 		setBigFont(fontSize, fontOffset);
+		resetBoard();
 	}
 
 	public BoardRenderer(BoardType type) {
-		this();
-
 		if(type == BoardType.MAIN_BOARD) {
 			// 預設值
 		} else if(type == BoardType.SMALL_BOARD) {
@@ -71,14 +67,18 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 			
 			
 		}
-		
+		resetBoard();
 	}
 	
 	protected void resetBoard() {
+		this.removeMouseListener(this);
+		this.removeMouseMotionListener(this);
 		this.setBackground(Color.WHITE);
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
 		this.setLocation(LOC_LEFT, LOC_TOP);
+		this.addMouseMotionListener(this);
+		this.addMouseListener(this);
 	}
 	
 	protected void paintComponent(Graphics g) {
