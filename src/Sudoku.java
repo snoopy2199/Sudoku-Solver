@@ -62,7 +62,7 @@ public class Sudoku {
 	}
 	
 	public boolean isComplete() {
-		if (getPoint() == 29) {
+		if (getPoint() == 27) {
 			return true;
 		}
 		else return false;
