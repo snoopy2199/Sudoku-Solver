@@ -17,7 +17,7 @@ public class SudokuSolver extends JFrame {
 	
 	// SudokuSolver class  ===============================================================
 	
-	private MainBoard mainBoard  = new MainBoard();
+	private BoardRenderer mainBoard  = new BoardRenderer();
 	
 	public SudokuSolver (String title) {
 		super(title);

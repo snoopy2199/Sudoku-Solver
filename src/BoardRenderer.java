@@ -7,27 +7,32 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	
 	private static final long serialVersionUID = -2233346051421465237L;
 
+	public enum BoardType {
+		MAIN_BOARD,
+		SMALL_BOARD;
+	}
+	
 	// 請不要直接改動預設值，若有需要修改請繼承此類別，並於子類別建構子中使用 super.SIZE_WIDTH 等重設參數
 	
-	public int SIZE_WIDTH  		= 600;	// 背景寬度
-	public int SIZE_HEIGHT 		= 600;	// 背景高度
-	public int LOC_TOP 			= 50;	// 棋盤距離上方
-	public int LOC_LEFT 		= 50;	// 棋盤距離左方
-	public int GRID_SIZE 		= 60;	// 棋格大小
-	public int GRID_MIN 		= 30;	// 棋盤最小偏移(距離邊界)
-	public int GRID_MAX 		= 570;	// 棋盤最大偏移(距離邊界)
-	public float NORMAL_LINE 	= 1.0f;	// 普通線寬度
-	public float SPLIT_LINE 	= 2.0f;	// 特殊線寬度
-	public int MOUSE_POS_RAW_X 	= 0;	//滑鼠座標
-	public int MOUSE_POS_RAW_Y 	= 0;	//滑鼠座標
-	public int MOUSE_POS_X 		= 0;	//滑鼠棋盤位置
-	public int MOUSE_POS_Y 		= 0;	//滑鼠棋盤位置
-	public boolean HOVER_EFFECT = true;			// 滑過是否高亮
-	public boolean ENABLE_REMBER_LAST = true; 	// 是否紀錄最後按下的方塊
-	public int BIG_FONT_SIZE 	= 50;	// 棋盤數字大小
-	public int SMALL_FONT_SIZE 	= 12;	// 一般文字大小
-	public int BIG_FONT_OFFSET 	= 35;	// 棋盤數字偏移矯正
-	public boolean SHOW_INFO 	= true; // 是否顯示棋盤定位資訊
+	private int SIZE_WIDTH  		= 600;	// 背景寬度
+	private int SIZE_HEIGHT 		= 600;	// 背景高度
+	private int LOC_TOP 			= 50;	// 棋盤距離上方
+	private int LOC_LEFT 		= 50;	// 棋盤距離左方
+	private int GRID_SIZE 		= 60;	// 棋格大小
+	private int GRID_MIN 		= 30;	// 棋盤最小偏移(距離邊界)
+	private int GRID_MAX 		= 570;	// 棋盤最大偏移(距離邊界)
+	private float NORMAL_LINE 	= 1.0f;	// 普通線寬度
+	private float SPLIT_LINE 	= 2.0f;	// 特殊線寬度
+	private int MOUSE_POS_RAW_X 	= 0;	//滑鼠座標
+	private int MOUSE_POS_RAW_Y 	= 0;	//滑鼠座標
+	private int MOUSE_POS_X 		= 0;	//滑鼠棋盤位置
+	private int MOUSE_POS_Y 		= 0;	//滑鼠棋盤位置
+	private boolean HOVER_EFFECT = true;		// 滑過是否高亮
+	private boolean ENABLE_REMBER_LAST = true; 	// 是否紀錄最後按下的方塊
+	private int BIG_FONT_SIZE 		= 50;	// 棋盤數字大小
+	private int SMALL_FONT_SIZE 	= 12;	// 一般文字大小
+	private int BIG_FONT_OFFSET 	= 35;	// 棋盤數字偏移矯正
+	private boolean SHOW_INFO 		= true; // 是否顯示棋盤定位資訊
 	
 	// 取得畫筆物件
 	private BasicStroke NORMAL_STROKE 	= new BasicStroke(NORMAL_LINE);
@@ -46,7 +51,29 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.addMouseListener(this);
 		resetBoard();
 	}
+	
+	public BoardRenderer(int width, int height, int left, int top, boolean isHighLightAndHover, int fontSize, int fontOffset) {
+		this();
+		setBoardSize(width, height);
+		setBoardLoc(left, top);
+		setHoverEffect(isHighLightAndHover);
+		setRememberLast(isHighLightAndHover);
+		setBigFont(fontSize, fontOffset);
+	}
 
+	public BoardRenderer(BoardType type) {
+		this();
+
+		if(type == BoardType.MAIN_BOARD) {
+			// 預設值
+		} else if(type == BoardType.SMALL_BOARD) {
+			// 小棋盤設定
+			
+			
+		}
+		
+	}
+	
 	protected void resetBoard() {
 		this.setBackground(Color.WHITE);
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
@@ -225,9 +252,89 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	}
 	
 	// 滑過是否有特效
-	public void setHoverEffect(boolean enable) {
+	public BoardRenderer setHoverEffect(boolean enable) {
 		HOVER_EFFECT = enable;
 		this.repaint();
+		return this;
+	}
+	
+	// 是否記錄最後按下的位置
+	public BoardRenderer setRememberLast(boolean enable) {
+		ENABLE_REMBER_LAST = enable;
+		this.repaint();
+		return this;
+	}	
+	
+	// 設定大小
+	public BoardRenderer setBoardSize(int width, int height) {
+		SIZE_WIDTH = width;
+		SIZE_HEIGHT = height;
+		
+		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
+		
+		this.repaint();
+		return this;
+	}
+	
+	// 設定位置
+	public BoardRenderer setBoardLoc(int left, int top) {
+		LOC_TOP = top;
+		LOC_LEFT = left;
+		
+		this.setLocation(LOC_LEFT, LOC_TOP);
+		
+		this.repaint();
+		return this;
+	}
+	
+	// 設定格子
+	public BoardRenderer setBoardGrid(int size, int min, int max) {
+		GRID_SIZE = size;
+		GRID_MIN = min;
+		GRID_MAX = max;
+		this.repaint();
+		return this;
+	}
+	
+	// 設定框厚度
+	public BoardRenderer setBoardGrid(int normal, int split) {
+		NORMAL_LINE = normal;
+		SPLIT_LINE = split;
+		
+		NORMAL_STROKE 	= new BasicStroke(NORMAL_LINE);
+		SPLIT_STROKE	= new BasicStroke(SPLIT_LINE);
+		
+		this.repaint();
+		return this;
+	}	
+
+	// 設定數字顯示大小及位移
+	public BoardRenderer setBigFont(int size, int offset) {
+		BIG_FONT_SIZE = size;
+		BIG_FONT_OFFSET = offset;
+		
+		BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
+		
+		this.repaint();
+		return this;
+	}		
+	
+	// 設定資訊文字顯示大小
+	public BoardRenderer setSmallFont(int size) {
+		SMALL_FONT_SIZE = size;
+		
+		SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
+		
+		this.repaint();
+		return this;
+	}		
+
+	// 設定是否顯示資訊文字
+	public BoardRenderer setShowInfo(boolean enable) {
+		SHOW_INFO = enable;
+		this.repaint();
+		return this;
 	}
 	
 	// 取得滑鼠停在的格子 1-9 (0為不在格子上)
