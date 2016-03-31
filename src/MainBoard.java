@@ -1,6 +1,3 @@
-
-
-
 // 用於顯示左方主要棋盤位置
 
 public class MainBoard extends BoardRenderer {

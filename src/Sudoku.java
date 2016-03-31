@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 
 public class Sudoku {
@@ -18,8 +16,9 @@ public class Sudoku {
 	
 	// 設定值，若data為0，則表示那格沒有填入
 	public boolean setData(int x, int y, int data) {
-		if (x > 9 || x < 1 || y > 9 || y < 1 || data > 9 || data < 0)
+		if (x > 9 || x < 1 || y > 9 || y < 1 || data > 9 || data < 0) {
 			return false;
+		}
 		_data [x][y] = data;
 		return true;
 	}
@@ -30,8 +29,9 @@ public class Sudoku {
 	
 	// 取得值
 	public int getData(int x, int y) {
-		if (x > 9 || x < 1 || y > 9 || y < 1)
+		if (x > 9 || x < 1 || y > 9 || y < 1) {
 			return -1;
+		}
 		return _data[x][y];
 	}
 	
@@ -62,7 +62,9 @@ public class Sudoku {
 	}
 	
 	public boolean isComplete() {
-		if(getPoint() == 29) return true;
+		if (getPoint() == 29) {
+			return true;
+		}
 		else return false;
 	}
 }

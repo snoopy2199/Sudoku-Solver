@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -12,18 +10,12 @@ public class SudokuSolver extends JFrame {
 	static int size_width  = 1000;
 	static int size_height = 730;
 		
-	private static SudokuSolver sudoku = null;
-		
-	public static SudokuSolver get() {
-		return sudoku == null ? (sudoku = new SudokuSolver("Sudoku Solver")) : sudoku;
-	}
-		
 	public static void main(String[] args) {
 		// 進入主程式
-		SudokuSolver.get();
+		new SudokuSolver("SudokuSolver");
 	}
 	
-	// Sutoku class  ===============================================================
+	// SudokuSolver class  ===============================================================
 	
 	private MainBoard mainBoard  = new MainBoard();
 	
