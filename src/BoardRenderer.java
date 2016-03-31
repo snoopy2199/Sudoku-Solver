@@ -42,17 +42,21 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	private Point lastClick = null;		// 最後按下的位置
 	
 	public BoardRenderer() {
+		this.addMouseMotionListener(this);
+		this.addMouseListener(this);
+		resetBoard();
+	}
+
+	protected void resetBoard() {
 		this.setBackground(Color.WHITE);
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
 		this.setLocation(LOC_LEFT, LOC_TOP);
-		this.addMouseMotionListener(this);
-		this.addMouseListener(this);
 	}
-
+	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		Graphics2D g2 = (Graphics2D) g;	// 開始2D繪圖設置
 
 		// 高亮最後按下的位置

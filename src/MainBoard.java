@@ -11,6 +11,8 @@ public class MainBoard extends BoardRenderer {
 		super.LOC_TOP		= 50;
 		super.LOC_LEFT		= 50;
 		// 其餘按照預設值
+		
+		resetBoard();
 	}
 	
 }
