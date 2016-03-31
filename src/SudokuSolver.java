@@ -1,4 +1,4 @@
-package ga.datamining.sudoku;
+
 
 import java.awt.*;
 import javax.swing.*;
