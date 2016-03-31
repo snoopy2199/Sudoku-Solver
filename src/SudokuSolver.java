@@ -40,13 +40,9 @@ public class SudokuSolver extends JFrame {
 		mainPanel.setLayout(null);
 		
 		// 新增面板
-		mainPanel.add(mainBoard);
-		mainPanel.add(gaResultRenderer);
-		mainPanel.add(forceResultRenderer);
-
-		
-		// 棋盤 600*600  位置 50*50
-		//...	// 其他 250*600  位置 50*700
+		mainPanel.add(mainBoard);            // 棋盤 400*400
+		mainPanel.add(gaResultRenderer);     // 基因演算法結果視窗 450*200
+		mainPanel.add(forceResultRenderer);	 // 暴力解結果視窗 450*200
 		
 		// 顯示視窗
 		this.pack();
