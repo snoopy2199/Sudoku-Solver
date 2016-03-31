@@ -289,16 +289,16 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	}
 	
 	// 設定格子
-	public BoardRenderer setBoardGrid(int size, int min, int max) {
+	public BoardRenderer setBoardGrid(int size, int min) {
 		GRID_SIZE = size;
 		GRID_MIN = min;
-		GRID_MAX = max;
+		GRID_MAX = min + 9 * size;
 		this.repaint();
 		return this;
 	}
 	
 	// 設定框厚度
-	public BoardRenderer setBoardGrid(int normal, int split) {
+	public BoardRenderer setBoardGridLine(int normal, int split) {
 		NORMAL_LINE = normal;
 		SPLIT_LINE = split;
 		
