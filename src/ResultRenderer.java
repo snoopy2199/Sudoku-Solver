@@ -25,7 +25,7 @@ public class ResultRenderer extends JPanel{
 	private int CHART_HEIGHT = 140;     //折線圖高度
 	private int CHART_TOP    = 25;      //折線圖上方距離
 	private int CHART_LEFT   = 180;     //折線圖左方距離
-	private int ARROW_SIZE   = 10;
+	private int ARROW_SIZE   = 10;      //箭頭大小
 	
 	//秒數位置設定
 	private int TIME_LEFT = 340;
@@ -35,7 +35,8 @@ public class ResultRenderer extends JPanel{
 	
 	// == 畫面資料 == //
 	
-	private String second = "0";
+	private int[] data = {};      //折線圖資料
+	private String second = "0";  //執行時間
 	
 	public ResultRenderer(int width, int height, int left, int top, String type) {
 		SIZE_HEIGHT = height;
@@ -77,16 +78,23 @@ public class ResultRenderer extends JPanel{
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT - ARROW_SIZE);
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT + ARROW_SIZE);
 		
-		
+		//TODO:畫資料
+
 		//秒數
-		g.drawString("執行時間：", TIME_LEFT, 50);
-		g.drawString(second, TIME_LEFT + 60, 50);
+		//距離上方的高度固定為50
+		g.drawString("執行時間：" + second, TIME_LEFT, 50);
 	}
 	
 	
 	//設定結束時間
 	public void setResultTime(int second) {
 		this.second = String.valueOf(second);
+		this.repaint();
+	}
+	
+	//設定折線圖資料
+	public void setData(int[] data){
+		this.data = data;
 		this.repaint();
 	}
 	
