@@ -8,7 +8,7 @@ public class SudokuSolver extends JFrame {
 	private static final long serialVersionUID = 5121011014101155908L;
 	
 	static int size_width  = 1000;
-	static int size_height = 730;
+	static int size_height = 600;
 		
 	public static void main(String[] args) {
 		// 進入主程式
@@ -17,7 +17,8 @@ public class SudokuSolver extends JFrame {
 	
 	// SudokuSolver class  ===============================================================
 	
-	private BoardRenderer mainBoard  = new BoardRenderer();
+	private BoardRenderer mainBoard  = new BoardRenderer(BoardRenderer.BoardType.MAIN_BOARD);
+	private ResultRenderer gaResultRenderer  = new ResultRenderer(450, 200, 500, 50, "GA");
 	
 	public SudokuSolver (String title) {
 		super(title);
@@ -38,7 +39,11 @@ public class SudokuSolver extends JFrame {
 		mainPanel.setLayout(null);
 		
 		// 新增面板
-		mainPanel.add(mainBoard);	// 棋盤 600*600  位置 50*50
+		mainPanel.add(mainBoard);
+		mainPanel.add(gaResultRenderer);	
+
+		
+		// 棋盤 600*600  位置 50*50
 		//...	// 其他 250*600  位置 50*700
 		
 		// 顯示視窗
