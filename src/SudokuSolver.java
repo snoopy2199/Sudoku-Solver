@@ -19,6 +19,7 @@ public class SudokuSolver extends JFrame {
 	
 	private BoardRenderer mainBoard  = new BoardRenderer(BoardRenderer.BoardType.MAIN_BOARD);
 	private ResultRenderer gaResultRenderer  = new ResultRenderer(450, 200, 500, 50, "GA");
+	private ResultRenderer forceResultRenderer  = new ResultRenderer(450, 200, 500, 300, "Force");
 	
 	public SudokuSolver (String title) {
 		super(title);
@@ -35,12 +36,13 @@ public class SudokuSolver extends JFrame {
 		this.setResizable(false);								// 不可被調整大小
 		
 		Container mainPanel = this.getContentPane();
-		mainPanel.setBackground(Color.GRAY);
+		mainPanel.setBackground(Color.LIGHT_GRAY);
 		mainPanel.setLayout(null);
 		
 		// 新增面板
 		mainPanel.add(mainBoard);
-		mainPanel.add(gaResultRenderer);	
+		mainPanel.add(gaResultRenderer);
+		mainPanel.add(forceResultRenderer);
 
 		
 		// 棋盤 600*600  位置 50*50
