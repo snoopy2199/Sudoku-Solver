@@ -10,13 +10,33 @@ public class ResultRenderer extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
+	private String TYPE;	//辨別結果視窗
+	
+	// == 畫面設計 == //
+	
+	//整體大小距離設定
 	private int SIZE_WIDTH;
 	private int SIZE_HEIGHT;
 	private int LOC_TOP;
 	private int LOC_LEFT;
-	private String TYPE;	//辨別結果視窗
+	
+	//折線圖設定
+	private int CHART_WIDTH  = 160;     //折線圖寬度
+	private int CHART_HEIGHT = 140;     //折線圖高度
+	private int CHART_TOP    = 25;      //折線圖上方距離
+	private int CHART_LEFT   = 180;     //折線圖左方距離
+	private int ARROW_SIZE   = 10;
+	
+	//秒數位置設定
+	private int TIME_LEFT = 340;
+	
+	//建立棋盤
 	private BoardRenderer smallBoard = new BoardRenderer(BoardRenderer.BoardType.SMALL_BOARD);
-
+	
+	// == 畫面資料 == //
+	
+	private String second = "0";
+	
 	public ResultRenderer(int width, int height, int left, int top, String type) {
 		SIZE_HEIGHT = height;
 		SIZE_WIDTH = width;
@@ -41,12 +61,33 @@ public class ResultRenderer extends JPanel{
 		
 		//底色
 		g.setColor(Color.WHITE);
+		//-2為預留空間
+		//40是圓弧程度，沒有用成變數，因為覺得應該不會去改
 		g.fillRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
 
 		//底框
 		g.setColor(Color.black);
 		g.drawRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
 		
+		//折線圖底圖
+		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT, CHART_TOP + CHART_HEIGHT);
+		g.drawLine(CHART_LEFT, CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT);
+		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT - ARROW_SIZE, CHART_TOP + ARROW_SIZE);
+		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT + ARROW_SIZE, CHART_TOP + ARROW_SIZE);
+		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT - ARROW_SIZE);
+		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT + ARROW_SIZE);
+		
+		
+		//秒數
+		g.drawString("執行時間：", TIME_LEFT, 50);
+		g.drawString(second, TIME_LEFT + 60, 50);
+	}
+	
+	
+	//設定結束時間
+	public void setResultTime(int second) {
+		this.second = String.valueOf(second);
+		this.repaint();
 	}
 	
 }
