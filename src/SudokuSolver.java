@@ -62,16 +62,31 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		mainPanel.add(forceResultRenderer);	 // 暴力解結果視窗 450*200
 		mainPanel.add(buttonPanel);
 
+		example1Btn.addActionListener(this);
+		example2Btn.addActionListener(this);
+		resetBtn.addActionListener(this);
+		solveBtn.addActionListener(this);
+		
 		// 顯示視窗
 		this.pack();
 		this.setVisible(true);
 	}
-
-	@Override
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO: 填上button的功能
 		if (e.getSource() == example1Btn) {
-
+			int[][] example1 = {
+					{0,0,1,0,0,0,0,8,0},
+					{0,0,0,7,1,0,2,0,3},
+					{3,0,5,0,0,0,0,0,0},
+					{0,0,0,0,8,0,0,2,0},
+					{6,0,0,5,0,7,0,0,1},
+					{0,9,0,0,3,0,0,0,0},
+					{0,0,0,0,0,0,1,0,9},
+					{4,0,3,0,9,5,0,0,0},
+					{0,1,0,0,0,0,4,0,0}
+			};
+			mainBoard.setDefaultContent(example1);
 		}
 		
 		if (e.getSource() == example2Btn) {
@@ -88,5 +103,4 @@ public class SudokuSolver extends JFrame implements ActionListener{
 			
 		}
 	}
-	
 }
