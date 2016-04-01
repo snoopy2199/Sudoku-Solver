@@ -1,7 +1,9 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class SudokuSolver extends JFrame {
+public class SudokuSolver extends JFrame implements ActionListener{
 
 	// Sutoku static ===============================================================
 
@@ -22,8 +24,8 @@ public class SudokuSolver extends JFrame {
 	private ResultRenderer forceResultRenderer  = new ResultRenderer(450, 200, 500, 300, "Force");
 	private JButton example1Btn = new JButton("範例1");
 	private JButton example2Btn = new JButton("範例2");
-	private JButton checkBtn = new JButton("清除");
-	private JButton resetBtn = new JButton("解題");
+	private JButton resetBtn = new JButton("清除");
+	private JButton solveBtn = new JButton("解題");
 	
 	public SudokuSolver (String title) {
 		super(title);
@@ -46,8 +48,8 @@ public class SudokuSolver extends JFrame {
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.add(example1Btn);
 		buttonPanel.add(example2Btn);
-		buttonPanel.add(checkBtn);
 		buttonPanel.add(resetBtn);
+		buttonPanel.add(solveBtn);
 		
 		
 		Container mainPanel = this.getContentPane();
@@ -63,6 +65,28 @@ public class SudokuSolver extends JFrame {
 		// 顯示視窗
 		this.pack();
 		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO: 填上button的功能
+		if (e.getSource() == example1Btn) {
+
+		}
+		
+		if (e.getSource() == example2Btn) {
+			
+		}
+		
+		if (e.getSource() == resetBtn) {
+			mainBoard.clear();
+			Sudoku.get()
+			      .clear();
+		}
+		
+		if (e.getSource() == solveBtn) {
+			
+		}
 	}
 	
 }
