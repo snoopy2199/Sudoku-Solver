@@ -62,6 +62,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		if(type == BoardType.MAIN_BOARD) {
 			SIZE_WIDTH  = 400;
 			SIZE_HEIGHT = 400;
+			BIG_FONT_SIZE = 30;
+			BIG_FONT_OFFSET = 20;
 			setBoardGrid(40, 20);
 		} else if(type == BoardType.SMALL_BOARD) {
 			SIZE_WIDTH  = 150;
@@ -83,6 +85,12 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
 		this.setLocation(LOC_LEFT, LOC_TOP);
+		
+		NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
+		SPLIT_STROKE = new BasicStroke(SPLIT_LINE);
+		BIG_FONT = new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
+		SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
+		
 		this.addMouseMotionListener(this);
 		this.addMouseListener(this);
 	}
