@@ -39,6 +39,10 @@ public class Sudoku {
 		return getData(pos.x, pos.y);
 	}
 	
+	public int [][] getData() {
+		return _data;
+	}
+	
 	// 重設
 	public void clear() {
 		_data = new int [9][9];

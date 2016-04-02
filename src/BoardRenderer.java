@@ -246,6 +246,10 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		return setDefaultContent(newContent);
 	}
 	
+	public boolean setDefaultContent(Sudoku content) {
+		return setDefaultContent(content.getData());
+	}
+	
 	// 重設棋盤內容
 	// 傳入長度81陣列    留白或0 = 不更動,    -1 = 刪除該格內容(若為Default則略過),
 	// 其他數字則為欲顯示的數字 (若該格為Default則略過) 若含非法字原則傳回false
