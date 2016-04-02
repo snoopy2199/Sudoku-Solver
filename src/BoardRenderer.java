@@ -298,6 +298,46 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		return refreshContent(newContent);
 	}
 	
+	// 重設棋盤內容[藍字內容] (會清除原資料)
+	public boolean setContent(int content []) {
+		if (content.length != 81) {
+			return false;
+		}
+		
+		// 檢查是否有非法字元
+		for (int i : content) {
+			if ((i < 0) || (i > 9)) {
+				return false;
+			}
+		}
+			
+		this.content = content;
+		this.repaint();
+		return true;
+	}
+	
+	public boolean setContent(int content [][]) {
+		if (content.length != 9) {
+			return false;
+		}
+		int newContent [] = new int [81];
+		for (int i = 0; i < 9; i++) {
+			if (content[i].length != 9) {
+				return false;
+			}
+			for (int j = 0; j < 9; j++) {
+				newContent[j*9 + i] = content [i][j];
+			}
+				
+		}
+		
+		return setContent(newContent);
+	}
+	
+	public boolean setContent(Sudoku content) {
+		return setContent(content.getData());
+	}
+	
 	// 滑過是否有特效
 	public BoardRenderer setHoverEffect(boolean enable) {
 		HOVER_EFFECT = enable;
