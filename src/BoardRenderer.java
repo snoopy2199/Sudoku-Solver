@@ -11,7 +11,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		SMALL_BOARD;
 	}
 	
-	// 請不要直接改動預設值，若有需要修改請繼承此類別，並於子類別建構子中使用 super.SIZE_WIDTH 等重設參數
+	// 請不要直接改動預設值
 	
 	private int SIZE_WIDTH  		= 600;  // 背景寬度
 	private int SIZE_HEIGHT 		= 600;  // 背景高度
@@ -197,10 +197,14 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.repaint();
 	}
 	
+	// 將暫存部分寫入預設
 	public void setToDefault() {
-		defaultContent = content;
-		this.repaint();
+		for (int i = 0; i < 81; i++) 
+			if (content[i] != 0 && defaultContent[i] == 0)
+				defaultContent[i] = content[i];
 		
+		content = new int[81];
+		this.repaint();
 	}
 	
 	// 設置預設數字(非必要=0)，數字顏色也會不同
