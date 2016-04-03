@@ -22,8 +22,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	private float SPLIT_LINE    = 2.0f;  // 特殊線寬度
 	private int MOUSE_POS_RAW_X 	= 0;     // 滑鼠X座標
 	private int MOUSE_POS_RAW_Y 	= 0;     // 滑鼠Y座標
-	private int MOUSE_POS_X     = 0;     // 滑鼠棋盤X位置
-	private int MOUSE_POS_Y     = 0;     // 滑鼠棋盤Y位置
+	private int MOUSE_POS_X     = -1;     // 滑鼠棋盤X位置
+	private int MOUSE_POS_Y     = -1;     // 滑鼠棋盤Y位置
 	private int BIG_FONT_SIZE   = 50;    // 棋盤數字大小
 	private int SMALL_FONT_SIZE 	= 12;    // 一般文字大小
 	private int BIG_FONT_OFFSET 	= 35;    // 棋盤數字偏移矯正
@@ -123,7 +123,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 				}
 			}
 			g.fillRect((MOUSE_POS_X)*GRID_SIZE+GRID_MIN+1,
-					(MOUSE_POS_Y)*GRID_SIZE+1+GRID_MIN+1, 
+					(MOUSE_POS_Y)*GRID_SIZE+GRID_MIN+1, 
 					GRID_SIZE-1, GRID_SIZE-1);
 		}
 		
