@@ -1,8 +1,6 @@
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -57,8 +55,6 @@ public class ResultRenderer extends JPanel{
 	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		Graphics2D g2 = (Graphics2D) g;	// 開始2D繪圖設置
 		
 		//底色
 		g.setColor(Color.WHITE);

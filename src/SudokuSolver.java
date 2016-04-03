@@ -36,10 +36,10 @@ public class SudokuSolver extends JFrame implements ActionListener{
 
 		this.setSize(size_width, size_height);
 		this.setPreferredSize(new Dimension(size_width, size_height));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// 關閉視窗時離開主程式
-		this.setLocationRelativeTo(null);						// 開啟時顯示於螢幕正中央
-		this.setAlwaysOnTop(true);                              // 顯示於最上方
-		this.setResizable(false);								// 不可被調整大小
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	   // 關閉視窗時離開主程式
+		this.setLocationRelativeTo(null);                      // 開啟時顯示於螢幕正中央
+		this.setAlwaysOnTop(true);                             // 顯示於最上方
+		this.setResizable(false);                              // 不可被調整大小
 			
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setSize(400,50);

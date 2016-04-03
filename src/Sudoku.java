@@ -8,7 +8,7 @@ public class Sudoku {
 		return sudoku == null ? sudoku = new Sudoku() : sudoku;
 	}
 	
-	private int [][] _data = new int [9][9];
+	private int[][] _data = new int[9][9];
 	
 	public Sudoku() {
 		
@@ -19,7 +19,7 @@ public class Sudoku {
 		if (x > 9 || x < 1 || y > 9 || y < 1 || data > 9 || data < 0) {
 			return false;
 		}
-		_data [x][y] = data;
+		_data[x][y] = data;
 		return true;
 	}
 	
@@ -39,13 +39,13 @@ public class Sudoku {
 		return getData(pos.x, pos.y);
 	}
 	
-	public int [][] getData() {
+	public int[][] getData() {
 		return _data;
 	}
 	
 	// 重設
 	public void clear() {
-		_data = new int [9][9];
+		_data = new int[9][9];
 	}
 	
 	// 取得特定位置後的下一個空白位置
@@ -69,6 +69,8 @@ public class Sudoku {
 		if (getPoint() == 27) {
 			return true;
 		}
-		else return false;
+		else {
+			return false;
+		}
 	}
 }

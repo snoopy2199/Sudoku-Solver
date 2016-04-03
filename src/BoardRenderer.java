@@ -8,70 +8,61 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 
 	public enum BoardType {
 		MAIN_BOARD,
-		SMALL_BOARD;
+		SMALL_BOARD
 	}
 	
-	// 請不要直接改動預設值
-	
-	private int SIZE_WIDTH  		= 600;  // 背景寬度
-	private int SIZE_HEIGHT 		= 600;  // 背景高度
-	private int LOC_TOP 			= 50;	// 棋盤距離上方
-	private int LOC_LEFT 		= 50;       // 棋盤距離左方
-	private int GRID_SIZE 		= 60;       // 棋格大小
-	private int GRID_MIN 		= 30;       // 棋盤最小偏移(距離邊界)
-	private int GRID_MAX 		= 570;      // 棋盤最大偏移(距離邊界)
-	private float NORMAL_LINE 	= 1.0f;     // 普通線寬度
-	private float SPLIT_LINE 	= 2.0f;     // 特殊線寬度
-	private int MOUSE_POS_RAW_X 	= 0;    //滑鼠座標
-	private int MOUSE_POS_RAW_Y 	= 0;    //滑鼠座標
-	private int MOUSE_POS_X 		= 0;    //滑鼠棋盤位置
-	private int MOUSE_POS_Y 		= 0;    //滑鼠棋盤位置
-	private boolean HOVER_EFFECT = true;        // 滑過是否高亮
+	private int SIZE_WIDTH      = 600;   // 背景寬度
+	private int SIZE_HEIGHT     = 600;   // 背景高度
+	private int LOC_TOP         = 50;	 // 棋盤距離上方
+	private int LOC_LEFT        = 50;    // 棋盤距離左方
+	private int GRID_SIZE       = 60;    // 棋格大小
+	private int GRID_MIN        = 30;    // 棋盤最小偏移(距離邊界)
+	private int GRID_MAX        = 570;   // 棋盤最大偏移(距離邊界)
+	private float NORMAL_LINE   = 1.0f;  // 普通線寬度
+	private float SPLIT_LINE    = 2.0f;  // 特殊線寬度
+	private int MOUSE_POS_RAW_X 	= 0;     // 滑鼠X座標
+	private int MOUSE_POS_RAW_Y 	= 0;     // 滑鼠Y座標
+	private int MOUSE_POS_X     = 0;     // 滑鼠棋盤X位置
+	private int MOUSE_POS_Y     = 0;     // 滑鼠棋盤Y位置
+	private int BIG_FONT_SIZE   = 50;    // 棋盤數字大小
+	private int SMALL_FONT_SIZE 	= 12;    // 一般文字大小
+	private int BIG_FONT_OFFSET 	= 35;    // 棋盤數字偏移矯正
+	private boolean HOVER_EFFECT       = true;  // 滑過是否高亮
 	private boolean ENABLE_REMBER_LAST = true;  // 是否紀錄最後按下的方塊
-	private int BIG_FONT_SIZE 		= 50;   // 棋盤數字大小
-	private int SMALL_FONT_SIZE 	= 12;   // 一般文字大小
-	private int BIG_FONT_OFFSET 	= 35;   // 棋盤數字偏移矯正
-	private boolean SHOW_INFO 		= true; // 是否顯示棋盤定位資訊
+	private boolean SHOW_INFO          = true;  // 是否顯示棋盤定位資訊
 	
 	// 取得畫筆物件
-	private BasicStroke NORMAL_STROKE 	= new BasicStroke(NORMAL_LINE);
-	private BasicStroke SPLIT_STROKE	= new BasicStroke(SPLIT_LINE);
+	private BasicStroke NORMAL_STROKE = new BasicStroke(NORMAL_LINE);
+	private BasicStroke SPLIT_STROKE	  = new BasicStroke(SPLIT_LINE);
 	private Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
 	private Font SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
 	
 	// 紀錄數值 0為空 1-9為顯示數字
-	private int defaultContent [] = new int [81];
-	private int content [] = new int [81];
+	private int[] defaultContent = new int[81];
+	private int[] content        = new int[81];
+	
 	private boolean mouseDown = false;   // 滑鼠是否按下中
-	private Point lastClick = null;      // 最後按下的位置
+	private Point lastClick   = null;    // 最後按下的位置
 	
 	public BoardRenderer() {
 		resetBoard();
 	}
-	
-	public BoardRenderer(int width, int height, int left, int top, boolean isHighLightAndHover, int fontSize, int fontOffset) {
-		setBoardSize(width, height);
-		setBoardLoc(left, top);
-		setHoverEffect(isHighLightAndHover);
-		setRememberLast(isHighLightAndHover);
-		setBigFont(fontSize, fontOffset);
-		resetBoard();
-	}
 
 	public BoardRenderer(BoardType type) {
-		if(type == BoardType.MAIN_BOARD) {
+		if (type == BoardType.MAIN_BOARD) {
 			SIZE_WIDTH  = 400;
 			SIZE_HEIGHT = 400;
 			BIG_FONT_SIZE = 30;
 			BIG_FONT_OFFSET = 20;
 			setBoardGrid(40, 20);
-		} else if(type == BoardType.SMALL_BOARD) {
+			SHOW_INFO = false;
+		} else if (type == BoardType.SMALL_BOARD) {
 			SIZE_WIDTH  = 150;
 			SIZE_HEIGHT = 150;
-			LOC_TOP     = 18;
-			LOC_LEFT    = 10;
+			LOC_TOP   = 18;
+			LOC_LEFT  = 10;
 			setBoardGrid(15, 10);
-			SHOW_INFO   = false;
+			SHOW_INFO = false;
 			HOVER_EFFECT = false;
 			ENABLE_REMBER_LAST = false;
 		}
@@ -158,10 +149,10 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		
 		// 外框
 		g2.setStroke(new BasicStroke(SPLIT_LINE));
-		g.drawLine(GRID_MIN,GRID_MIN,GRID_MAX,GRID_MIN);
-		g.drawLine(GRID_MAX,GRID_MIN,GRID_MAX,GRID_MAX);
-		g.drawLine(GRID_MAX,GRID_MAX,GRID_MIN,GRID_MAX);
-		g.drawLine(GRID_MIN,GRID_MAX,GRID_MIN,GRID_MIN);
+		g.drawLine(GRID_MIN, GRID_MIN, GRID_MAX, GRID_MIN);
+		g.drawLine(GRID_MAX, GRID_MIN, GRID_MAX, GRID_MAX);
+		g.drawLine(GRID_MAX, GRID_MAX, GRID_MIN, GRID_MAX);
+		g.drawLine(GRID_MIN, GRID_MAX, GRID_MIN, GRID_MIN);
 				
 		// 內框
 		g2.setStroke(NORMAL_STROKE);
@@ -169,7 +160,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 			if ((count == 2) || (count == 5)) {
 				g2.setStroke(SPLIT_STROKE);
 			}	
-			g.drawLine(i ,GRID_MIN,i ,GRID_MAX);
+			g.drawLine(i, GRID_MIN, i, GRID_MAX);
 			g.drawLine(GRID_MIN, i, GRID_MAX, i);
 			g2.setStroke(NORMAL_STROKE);
 		}
@@ -200,8 +191,9 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	// 將暫存部分寫入預設
 	public void setToDefault() {
 		for (int i = 0; i < 81; i++) 
-			if (content[i] != 0 && defaultContent[i] == 0)
+			if (content[i] != 0 && defaultContent[i] == 0){
 				defaultContent[i] = content[i];
+			}
 		
 		content = new int[81];
 		this.repaint();
@@ -210,7 +202,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	// 設置預設數字(非必要=0)，數字顏色也會不同
 	// 傳入長度81陣列，可用clearFilled 清除設置預設數字以外的數字
 	// PS 設置後this.content會被清除 (可活動部分數字)
-	public boolean setDefaultContent(int content []) {
+	public boolean setDefaultContent(int[] content) {
 		if (content.length != 81) {
 			return false;
 		}
@@ -223,22 +215,22 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		}
 			
 		defaultContent = content;
-		this.content = new int [81];
+		this.content = new int[81];
 		this.repaint();
 		return true;
 	}
 	
-	public boolean setDefaultContent(int content [][]) {
+	public boolean setDefaultContent(int[][] content) {
 		if (content.length != 9) {
 			return false;
 		}
-		int newContent [] = new int [81];
+		int[] newContent = new int[81];
 		for (int i = 0; i < 9; i++) {
 			if (content[i].length != 9) {
 				return false;
 			}
 			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content [i][j];
+				newContent[j*9 + i] = content[i][j];
 			}
 				
 		}
@@ -253,7 +245,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	// 重設棋盤內容
 	// 傳入長度81陣列    留白或0 = 不更動,    -1 = 刪除該格內容(若為Default則略過),
 	// 其他數字則為欲顯示的數字 (若該格為Default則略過) 若含非法字原則傳回false
-	public boolean refreshContent(int content []) {
+	public boolean refreshContent(int[] content) {
 		if (content.length != 81) {
 			return false;
 		}
@@ -281,17 +273,17 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		return true;
 	}
 	
-	public boolean refreshContent(int content [][]) {
+	public boolean refreshContent(int[][] content) {
 		if (content.length != 9) {
 			return false;
 		}
-		int newContent [] = new int [81];
+		int[] newContent = new int[81];
 		for (int i = 0; i < 9; i++) {
 			if (content[i].length != 9) {
 				return false;
 			}
 			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content [i][j];
+				newContent[j*9 + i] = content[i][j];
 			}
 		}
 		
@@ -299,7 +291,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	}
 	
 	// 重設棋盤內容[藍字內容] (會清除原資料)
-	public boolean setContent(int content []) {
+	public boolean setContent(int[] content) {
 		if (content.length != 81) {
 			return false;
 		}
@@ -316,17 +308,17 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		return true;
 	}
 	
-	public boolean setContent(int content [][]) {
+	public boolean setContent(int[][] content) {
 		if (content.length != 9) {
 			return false;
 		}
-		int newContent [] = new int [81];
+		int[] newContent = new int[81];
 		for (int i = 0; i < 9; i++) {
 			if (content[i].length != 9) {
 				return false;
 			}
 			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content [i][j];
+				newContent[j*9 + i] = content[i][j];
 			}
 				
 		}
@@ -508,12 +500,3 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	
 	
 }
-
-
-
-
-/**
-*	BoardRenderer 
-*	包含棋盤顯示設定等功能
-*	Gama
-*/
