@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -21,12 +22,12 @@ public class ResultRenderer extends JPanel{
 	//折線圖設定
 	private int CHART_WIDTH  = 160;     //折線圖寬度
 	private int CHART_HEIGHT = 140;     //折線圖高度
-	private int CHART_TOP    = 25;      //折線圖上方距離
+	private int CHART_TOP    = 40;      //折線圖上方距離
 	private int CHART_LEFT   = 180;     //折線圖左方距離
 	private int ARROW_SIZE   = 10;      //箭頭大小
 	
 	//秒數位置設定
-	private int TIME_LEFT = 340;
+	private int TIME_LEFT = 360;
 	
 	//建立棋盤
 	private BoardRenderer smallBoard = new BoardRenderer(BoardRenderer.BoardType.SMALL_BOARD);
@@ -63,8 +64,19 @@ public class ResultRenderer extends JPanel{
 		//40是圓弧程度，沒有用成變數，因為覺得應該不會去改
 		g.fillRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
 
-		//底框
+		//繪製顏色
 		g.setColor(Color.black);
+		
+		//標題
+		g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
+		if (TYPE == "GA") {
+			g.drawString("基因演算法", 15, 30);
+		} else {
+			g.drawString("暴力破解法", 15, 30);
+		}
+		
+		
+		//底框
 		g.drawRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
 		
 		//折線圖底圖
@@ -78,8 +90,9 @@ public class ResultRenderer extends JPanel{
 		//TODO:畫資料
 
 		//秒數
-		//距離上方的高度固定為50
-		g.drawString("執行時間：" + second, TIME_LEFT, 50);
+		//距離上方的高度固定為60
+		g.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
+		g.drawString("執行時間：" + second, TIME_LEFT, 60);
 	}	
 	
 	//設定結束時間

@@ -9,7 +9,7 @@ public class SudokuSolver extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 5121011014101155908L;
 	
-	static int size_width  = 1000;
+	static int size_width  = 1050;
 	static int size_height = 600;
 		
 	public static void main(String[] args) {
@@ -20,8 +20,8 @@ public class SudokuSolver extends JFrame implements ActionListener{
 	// SudokuSolver class  ===============================================================
 	
 	private BoardRenderer mainBoard  = new BoardRenderer(BoardRenderer.BoardType.MAIN_BOARD);
-	private ResultRenderer gaResultRenderer  = new ResultRenderer(450, 200, 500, 50, "GA");
-	private ResultRenderer forceResultRenderer  = new ResultRenderer(450, 200, 500, 300, "Force");
+	private ResultRenderer gaResultRenderer  = new ResultRenderer(500, 200, 500, 50, "GA");
+	private ResultRenderer forceResultRenderer  = new ResultRenderer(500, 200, 500, 300, "Force");
 	private JButton example1Btn = new JButton("範例1");
 	private JButton example2Btn = new JButton("範例2");
 	private JButton resetBtn = new JButton("清除");
@@ -57,8 +57,8 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		
 		// 新增面板
 		mainPanel.add(mainBoard);            // 棋盤 400*400
-		mainPanel.add(gaResultRenderer);     // 基因演算法結果視窗 450*200
-		mainPanel.add(forceResultRenderer);	 // 暴力解結果視窗 450*200
+		mainPanel.add(gaResultRenderer);     // 基因演算法結果視窗 500*200
+		mainPanel.add(forceResultRenderer);	 // 暴力解結果視窗 500*200
 		mainPanel.add(buttonPanel);
 
 		example1Btn.addActionListener(this);

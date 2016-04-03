@@ -59,7 +59,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		} else if (type == BoardType.SMALL_BOARD) {
 			SIZE_WIDTH  = 150;
 			SIZE_HEIGHT = 150;
-			LOC_TOP   = 18;
+			LOC_TOP   = 33;
 			LOC_LEFT  = 10;
 			setBoardGrid(15, 10);
 			SHOW_INFO = false;
