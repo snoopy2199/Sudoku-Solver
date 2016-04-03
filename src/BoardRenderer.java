@@ -38,8 +38,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	private Font SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
 	
 	// 紀錄數值 0為空 1-9為顯示數字
-	private int[] defaultContent = new int[81];
-	private int[] content        = new int[81];
+	private int[][] contentQ = new int[9][9];
+	private int[][] contentA = new int[9][9];
 	
 	private boolean mouseDown = false;   // 滑鼠是否按下中
 	private Point lastClick   = null;    // 最後按下的位置
@@ -92,58 +92,60 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		Graphics2D g2 = (Graphics2D) g;	// 開始2D繪圖設置
 
 		// 高亮最後按下的位置
-		if (ENABLE_REMBER_LAST && lastClick != null && !isDefaultContent(lastClick.x, lastClick.y)) {
+		if (ENABLE_REMBER_LAST && lastClick != null) {
 			g.setColor(Color.decode("#ef9a9a"));
 			
-			g.fillRect((lastClick.x-1)*GRID_SIZE+1+GRID_MIN,
-					(lastClick.y-1)*GRID_SIZE+1+GRID_MIN, 
+			g.fillRect((lastClick.x)*GRID_SIZE+GRID_MIN+1,
+					(lastClick.y)*GRID_SIZE+GRID_MIN+1, 
 					GRID_SIZE-1, GRID_SIZE-1);
 		}
 		
-		// 高亮
-		if (HOVER_EFFECT && MOUSE_POS_X != 0 && MOUSE_POS_Y != 0) {
-			// 預設部分不會被高亮
-			if (!isDefaultContent(MOUSE_POS_X, MOUSE_POS_Y)) {
-				if (mouseDown) {
-					// 滑鼠按下中
-					if (ENABLE_REMBER_LAST && lastClick != null 
-							&& lastClick.x == MOUSE_POS_X 
-							&& lastClick.y == MOUSE_POS_Y ) {
-						g.setColor(Color.decode("#b71c1c"));
-					} else {
-						g.setColor(Color.decode("#64b5f6"));
-					}
+		// 滑過高亮
+		if (HOVER_EFFECT && MOUSE_POS_X != -1 && MOUSE_POS_Y != -1) {
+			
+			if (mouseDown) {
+			// 滑鼠按下中
+				if (ENABLE_REMBER_LAST && lastClick != null 
+					&& lastClick.x == MOUSE_POS_X 
+					&& lastClick.y == MOUSE_POS_Y ) {
+					g.setColor(Color.decode("#b71c1c"));
 				} else {
-					// 滑鼠未按下中
-					if (ENABLE_REMBER_LAST && lastClick != null 
-							&& lastClick.x == MOUSE_POS_X 
-							&& lastClick.y == MOUSE_POS_Y) {
-						g.setColor(Color.decode("#ef5350"));	
-					} else {
-						g.setColor(Color.decode("#bbdefb"));
-					}
+					g.setColor(Color.decode("#64b5f6"));
 				}
-				g.fillRect((MOUSE_POS_X-1)*GRID_SIZE+1+GRID_MIN,
-						(MOUSE_POS_Y-1)*GRID_SIZE+1+GRID_MIN, 
-						GRID_SIZE-1, GRID_SIZE-1);
+			} else {
+			// 滑鼠未按下中
+				if (ENABLE_REMBER_LAST && lastClick != null 
+					&& lastClick.x == MOUSE_POS_X 
+					&& lastClick.y == MOUSE_POS_Y) {
+					g.setColor(Color.decode("#ef5350"));	
+				} else {
+					g.setColor(Color.decode("#bbdefb"));
+				}
 			}
+			g.fillRect((MOUSE_POS_X)*GRID_SIZE+GRID_MIN+1,
+					(MOUSE_POS_Y)*GRID_SIZE+1+GRID_MIN+1, 
+					GRID_SIZE-1, GRID_SIZE-1);
 		}
 		
 		// 數字
 		g.setFont(BIG_FONT);
-		for (int i = 0; i < 81; i++) {
-			if (defaultContent[i] != 0) {
-				g.setColor(Color.BLACK);
-				g2.drawString(String.valueOf(defaultContent[i]),
-						i % 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE), 
-						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
-			} else if (content[i] != 0) {
-				g.setColor(Color.BLUE);
-				g2.drawString(String.valueOf(content[i]),
-						i % 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE), 
-						i / 9 * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (contentQ[i][j] != 0) {
+					g.setColor(Color.BLACK);
+					g2.drawString(String.valueOf(contentQ[i][j]),
+							j * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE),
+							i * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
+				}
+				else if (contentA[i][j] != 0) {
+					g.setColor(Color.BLUE);
+					g2.drawString(String.valueOf(contentA[i][j]),
+							j * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE),
+							i * GRID_SIZE + GRID_MIN + (int)(0.25 * GRID_SIZE) + BIG_FONT_OFFSET);
+				}
 			}
 		}
+		
 		g.setFont(SMALL_FONT);
 		g.setColor(Color.BLACK);
 		
@@ -175,159 +177,34 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		}				
 	} 
 	
-	// 刪除所有內容(重設)
-	public void clear() {
-		defaultContent = new int[81];
-		content = new int[81];
-		this.repaint();
-	}
-	
-	// 刪除除了Default的內容
-	public void clearFilled() {
-		content = new int[81];
-		this.repaint();
-	}
-	
-	// 將暫存部分寫入預設
-	public void setToDefault() {
-		for (int i = 0; i < 81; i++) 
-			if (content[i] != 0 && defaultContent[i] == 0){
-				defaultContent[i] = content[i];
-			}
-		
-		content = new int[81];
-		this.repaint();
-	}
-	
-	// 設置預設數字(非必要=0)，數字顏色也會不同
-	// 傳入長度81陣列，可用clearFilled 清除設置預設數字以外的數字
-	// PS 設置後this.content會被清除 (可活動部分數字)
-	public boolean setDefaultContent(int[] content) {
-		if (content.length != 81) {
-			return false;
-		}
-		
-		// 檢查是否有非法字元
-		for (int i : content) {
-			if ((i < 0) || (i > 9)) {
-				return false;
-			}
-		}
-			
-		defaultContent = content;
-		this.content = new int[81];
-		this.repaint();
-		return true;
-	}
-	
-	public boolean setDefaultContent(int[][] content) {
-		if (content.length != 9) {
-			return false;
-		}
-		int[] newContent = new int[81];
-		for (int i = 0; i < 9; i++) {
-			if (content[i].length != 9) {
-				return false;
-			}
-			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content[i][j];
-			}
-				
-		}
-		
-		return setDefaultContent(newContent);
-	}
-	
-	public boolean setDefaultContent(Sudoku content) {
-		return setDefaultContent(content.getData());
-	}
-	
 	// 重設棋盤內容
-	// 傳入長度81陣列    留白或0 = 不更動,    -1 = 刪除該格內容(若為Default則略過),
-	// 其他數字則為欲顯示的數字 (若該格為Default則略過) 若含非法字原則傳回false
-	public boolean refreshContent(int[] content) {
-		if (content.length != 81) {
+	public void clear() {
+		contentQ = new int[9][9];
+		contentA = new int[9][9];
+		this.repaint();
+	}
+	
+	public boolean setContent(boolean isQuestion, int[][] content) {
+		int[][] targetContent = isQuestion ? contentQ : contentA;
+		
+		if (content.length != 9) {
 			return false;
 		}
 		
-		// 檢查是否有非法字元
-		for (int i : content) {
-			if ((i < -1) || (i > 9)) {
+		for (int i = 0; i < 9; i++) {
+			if (content[i].length != 9) {
 				return false;
 			}
 		}
 		
-		for (int i = 0, nowValue = content[i]; i < content.length; nowValue = content[++i]) {
-			if (nowValue == 0) {
-				continue;	// 不變動
-			} else if (defaultContent[i] != 0) {
-				continue;	// 該格式default，無法變動
-			} else if (nowValue == -1) {
-				this.content[i] = 0;
-			} else {
-				this.content[i] = nowValue;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				targetContent[i][j] = content[i][j];
 			}
 		}
 		
 		this.repaint();
 		return true;
-	}
-	
-	public boolean refreshContent(int[][] content) {
-		if (content.length != 9) {
-			return false;
-		}
-		int[] newContent = new int[81];
-		for (int i = 0; i < 9; i++) {
-			if (content[i].length != 9) {
-				return false;
-			}
-			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content[i][j];
-			}
-		}
-		
-		return refreshContent(newContent);
-	}
-	
-	// 重設棋盤內容[藍字內容] (會清除原資料)
-	public boolean setContent(int[] content) {
-		if (content.length != 81) {
-			return false;
-		}
-		
-		// 檢查是否有非法字元
-		for (int i : content) {
-			if ((i < 0) || (i > 9)) {
-				return false;
-			}
-		}
-			
-		this.content = content;
-		this.repaint();
-		return true;
-	}
-	
-	public boolean setContent(int[][] content) {
-		if (content.length != 9) {
-			return false;
-		}
-		int[] newContent = new int[81];
-		for (int i = 0; i < 9; i++) {
-			if (content[i].length != 9) {
-				return false;
-			}
-			for (int j = 0; j < 9; j++) {
-				newContent[j*9 + i] = content[i][j];
-			}
-				
-		}
-		
-		return setContent(newContent);
-	}
-	
-	public boolean setContent(Sudoku content) {
-		return setContent(content.getData());
 	}
 	
 	// 滑過是否有特效
@@ -372,6 +249,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		GRID_SIZE = size;
 		GRID_MIN = min;
 		GRID_MAX = min + 9 * size;
+		
 		this.repaint();
 		return this;
 	}
@@ -416,28 +294,6 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		return this;
 	}
 	
-	// 取得滑鼠停在的格子 1-9 (0為不在格子上)
-	public Point getMousePosition() {
-		return new Point(MOUSE_POS_X, MOUSE_POS_Y);
-	}
-
-	// 取得最後位置
-	public Point getLastClick() {
-		return lastClick;
-	}
-	
-	// 取得是否預設內容
-	public boolean isDefaultContent(int x, int y) {
-		if ((x == 0) || (y == 0)) {
-			return false;
-		}
-		if (defaultContent[(y-1)*9 + (x-1)] == 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
 	// MouseMotionListener
 	@Override
 	public void mouseDragged(MouseEvent e) {}
@@ -448,19 +304,15 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		MOUSE_POS_RAW_Y = e.getY();
 		
 		if ((MOUSE_POS_RAW_X < GRID_MIN) || (MOUSE_POS_RAW_X > GRID_MAX - 1)) {
-			MOUSE_POS_X = 0;
+			MOUSE_POS_X = -1;
 		} else {
-			MOUSE_POS_X = (MOUSE_POS_RAW_X - GRID_MIN) / GRID_SIZE + 1;
+			MOUSE_POS_X = (MOUSE_POS_RAW_X - GRID_MIN) / GRID_SIZE;
 		}
 		
 		if ((MOUSE_POS_RAW_Y < GRID_MIN) || (MOUSE_POS_RAW_Y > GRID_MAX - 1)) {
-			MOUSE_POS_Y = 0;
+			MOUSE_POS_Y = -1;
 		} else {
-			MOUSE_POS_Y = (MOUSE_POS_RAW_Y - GRID_MIN) / GRID_SIZE + 1;
-		}
-		
-		if ((MOUSE_POS_X == 0) || (MOUSE_POS_Y == 0)) {
-			MOUSE_POS_X = MOUSE_POS_Y = 0;
+			MOUSE_POS_Y = (MOUSE_POS_RAW_Y - GRID_MIN) / GRID_SIZE;
 		}
 		
 		this.repaint();
@@ -486,9 +338,9 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public void mouseReleased(MouseEvent arg0) {
 		mouseDown = false;
 		
-		if (ENABLE_REMBER_LAST && !isDefaultContent(MOUSE_POS_X, MOUSE_POS_Y)) {
+		if (ENABLE_REMBER_LAST) {
 			if (((lastClick != null) && (lastClick.x == MOUSE_POS_X) && (lastClick.y == MOUSE_POS_Y))
-					|| (MOUSE_POS_X == 0) || (MOUSE_POS_Y == 0)) {
+					|| (MOUSE_POS_X == -1) || (MOUSE_POS_Y == -1)) {
 				lastClick = null;
 			} else {
 				lastClick = new Point(MOUSE_POS_X, MOUSE_POS_Y);
@@ -497,6 +349,4 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		
 		this.repaint();
 	}
-	
-	
 }

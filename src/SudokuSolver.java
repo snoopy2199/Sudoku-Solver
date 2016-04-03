@@ -51,7 +51,6 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		buttonPanel.add(resetBtn);
 		buttonPanel.add(solveBtn);
 		
-		
 		Container mainPanel = this.getContentPane();
 		mainPanel.setBackground(null);
 		mainPanel.setLayout(null);
@@ -73,7 +72,7 @@ public class SudokuSolver extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		// TODO: 填上button的功能
+
 		if (e.getSource() == example1Btn) {
 			int[][] example1 = {
 					{0,0,1,0,0,0,0,8,0},
@@ -86,7 +85,7 @@ public class SudokuSolver extends JFrame implements ActionListener{
 					{4,0,3,0,9,5,0,0,0},
 					{0,1,0,0,0,0,4,0,0}
 			};
-			mainBoard.setDefaultContent(example1);
+			mainBoard.setContent(true, example1);
 		}
 		
 		if (e.getSource() == example2Btn) {
@@ -95,8 +94,6 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		
 		if (e.getSource() == resetBtn) {
 			mainBoard.clear();
-			Sudoku.get()
-			      .clear();
 		}
 		
 		if (e.getSource() == solveBtn) {

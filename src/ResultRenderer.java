@@ -58,6 +58,7 @@ public class ResultRenderer extends JPanel{
 		
 		//底色
 		g.setColor(Color.WHITE);
+		
 		//-2為預留空間
 		//40是圓弧程度，沒有用成變數，因為覺得應該不會去改
 		g.fillRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
@@ -79,8 +80,7 @@ public class ResultRenderer extends JPanel{
 		//秒數
 		//距離上方的高度固定為50
 		g.drawString("執行時間：" + second, TIME_LEFT, 50);
-	}
-	
+	}	
 	
 	//設定結束時間
 	public void setResultTime(int second) {
@@ -93,5 +93,4 @@ public class ResultRenderer extends JPanel{
 		this.data = data;
 		this.repaint();
 	}
-	
 }
