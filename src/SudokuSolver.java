@@ -30,6 +30,35 @@ public class SudokuSolver extends JFrame implements ActionListener{
 	public SudokuSolver (String title) {
 		super(title);
 		createWindow();
+		
+		/* Test for fitness
+		Sudoku s = Sudoku.get();
+		int[][] example1 = {
+				{0,6,7,0,0,0,0,0,2},
+				{4,0,8,0,0,0,0,0,3},
+				{3,2,0,0,0,0,0,0,4},
+				{5,0,0,0,0,0,0,0,5},
+				{6,0,0,0,0,0,0,0,1},
+				{7,0,0,0,0,0,0,0,6},
+				{8,0,0,0,0,0,0,0,7},
+				{9,0,0,0,0,0,0,0,8},
+				{2,1,3,4,5,6,7,8,9}
+		};
+		int[][] example2 = {
+				{1,6,7,0,0,0,0,0,2},
+				{4,5,4,0,0,0,0,0,3},
+				{3,2,9,0,0,0,0,0,4},
+				{5,0,0,0,0,0,0,0,5},
+				{6,0,0,0,0,0,0,0,1},
+				{7,0,0,0,0,0,0,0,6},
+				{8,0,0,0,0,0,0,0,7},
+				{9,0,0,0,0,0,0,0,8},
+				{2,1,3,4,5,6,7,8,9}
+		};
+		s.setQuestion(example1);
+		s.setAnswer(example2);
+		System.out.println(s.getFitnessValue());
+		*/
 	}
 	
 	public void createWindow() {
