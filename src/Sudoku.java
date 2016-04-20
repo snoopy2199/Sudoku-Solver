@@ -1,4 +1,4 @@
-public class Sudoku {
+public class Sudoku implements Comparable<Sudoku> {
 	
 	//static
 	private static Sudoku sudoku = null;
@@ -111,5 +111,11 @@ public class Sudoku {
 			}
 		}
 		return sum;
+	}
+
+	// Comparable
+	@Override
+	public int compareTo(Sudoku a) {
+		return a.getFitnessValue() - this.getFitnessValue();
 	}
 }
