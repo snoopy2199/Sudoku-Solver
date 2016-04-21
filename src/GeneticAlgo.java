@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GeneticAlgo implements Runnable {
 
-	// static 
+	// static ==========
 	
 	// 挑選
 	public static List<Sudoku> getRandomPick(List<Sudoku> list, int count) {
@@ -27,13 +27,31 @@ public class GeneticAlgo implements Runnable {
 		return result;
 	}
 	
-	// class
+	// class ===========
 	
-	// Runnable
+	private ISudokuCallback callback = null;
+	private Sudoku inputObject = null;
+	
+	//建構子
+	public GeneticAlgo (ISudokuCallback callback,Sudoku inputObject) {
+		this.callback = callback;
+		this.inputObject = inputObject;
+	}
+	
+	// Runnable ========
 	@Override
 	public void run() {
 		
-
+		ISudokuCallback.SolveData solveData = 
+				new ISudokuCallback.SolveData(
+						ISudokuCallback.SolveData.SolverType.Genetic, inputObject);
+		// 中途更新時回調
+		//if (callback != null) callback.onSolverUpdate(sloveDate);(solveData);
+		
+		// 中途新增每部記錄 
+		//solveData.addRecord(0);
+		
+		if (callback != null) callback.onSolverFinish(solveData);
 	}
 
 }

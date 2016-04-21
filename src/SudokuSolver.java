@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class SudokuSolver extends JFrame implements ActionListener{
+public class SudokuSolver extends JFrame implements ActionListener, ISudokuCallback{
 
 	// Sutoku static ===============================================================
 
@@ -128,5 +128,18 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		if (e.getSource() == solveBtn) {
 			
 		}
+	}
+	
+	// ISudokuCallback 可用來呼叫繪圖
+	@Override
+	public void onSolverUpdate(SolveData sloveDate) {
+		
+		
+	}
+
+	@Override
+	public void onSolverFinish(SolveData sloveDate) {
+		
+		
 	}
 }
