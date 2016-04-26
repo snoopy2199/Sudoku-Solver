@@ -72,7 +72,7 @@ public class ResultRenderer extends JPanel{
 		
 		//標題
 		g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
-		if (TYPE == "GA") {
+		if (TYPE.equals("GA")) {
 			g.drawString("基因演算法", 15, 30);
 		} else {
 			g.drawString("暴力破解法", 15, 30);
@@ -81,6 +81,8 @@ public class ResultRenderer extends JPanel{
 		//底框
 		g.drawRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
 		
+		g.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+		
 		//折線圖底圖
 		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT, CHART_TOP + CHART_HEIGHT);
 		g.drawLine(CHART_LEFT, CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT);
@@ -88,6 +90,9 @@ public class ResultRenderer extends JPanel{
 		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT + ARROW_SIZE, CHART_TOP + ARROW_SIZE);
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT - ARROW_SIZE);
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT + ARROW_SIZE);
+		
+		g.drawString("point", CHART_LEFT - 15, CHART_TOP - 10);
+		g.drawString("times", CHART_LEFT + CHART_WIDTH + 10, CHART_TOP + CHART_HEIGHT);
 		
 		//秒數
 		//距離上方的高度固定為60
