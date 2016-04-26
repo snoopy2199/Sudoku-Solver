@@ -353,6 +353,9 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			if (lastClick == null) return; // 擋下已知的bug
+			
 			if (e.getActionCommand().equals("清除")){
 				contentQ[lastClick.y][lastClick.x] = 0; 
 			} else {

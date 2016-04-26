@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class SudokuSolver extends JFrame implements ActionListener, ISudokuCallback{
 
-	// Sutoku static ===============================================================
+	// Sudoku static ===============================================================
 
 	private static final long serialVersionUID = 5121011014101155908L;
 	

@@ -1,6 +1,6 @@
 import java.util.*;
 
-// 這個介面是讓
+// 這個介面是讓Solver實現回調方法
 public interface ISudokuCallback {
 
 	public static class SolveData {

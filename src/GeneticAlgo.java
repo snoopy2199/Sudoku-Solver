@@ -46,9 +46,9 @@ public class GeneticAlgo implements Runnable {
 				new ISudokuCallback.SolveData(
 						ISudokuCallback.SolveData.SolverType.Genetic, inputObject);
 		// 中途更新時回調
-		//if (callback != null) callback.onSolverUpdate(sloveDate);(solveData);
+		//if (callback != null) callback.onSolverUpdate(sloveDate);
 		
-		// 中途新增每部記錄 
+		// 中途新增每步記錄 
 		//solveData.addRecord(0);
 		
 		if (callback != null) callback.onSolverFinish(solveData);
