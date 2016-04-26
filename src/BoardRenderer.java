@@ -318,6 +318,43 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.repaint();
 	}
 
+	class NumberKeyboard extends JPopupMenu {
+
+		private static final long serialVersionUID = 1L;
+
+		public NumberKeyboard(){
+			JMenuItem item;
+			GridBagConstraints constraints;
+			
+			this.setLayout(new GridBagLayout());
+			for (int i = 0; i < 3; i++) {
+				for (int j = 1; j <= 3; j++) {
+					item = new JMenuItem(String.valueOf(i*3+j));
+					constraints = new GridBagConstraints();
+					constraints.gridx = j-1;
+					constraints.gridy = i;
+					constraints.gridwidth = 1;
+					constraints.gridheight = 1;
+					this.add(item, constraints);
+				}
+			}
+			
+			item = new JMenuItem("清除");
+			constraints = new GridBagConstraints();
+			constraints.gridx = 0;
+			constraints.gridy = 3;
+			constraints.gridwidth = 3;
+			constraints.gridheight = 1;
+	        constraints.fill = GridBagConstraints.BOTH;
+			this.add(item, constraints);
+		}
+	}
+	
+	 private void doPop(MouseEvent e){
+		 NumberKeyboard numberKeyboard = new NumberKeyboard();
+		 numberKeyboard.show(e.getComponent(), e.getX(), e.getY());
+	}
+	 
 	// MouseListener
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
@@ -329,9 +366,13 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public void mouseExited(MouseEvent arg0) {}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent arg0) {	
 		mouseDown = true;
 		this.repaint();
+		
+		if (ENABLE_REMBER_LAST && SwingUtilities.isRightMouseButton(arg0)) {
+		    doPop(arg0);
+		}
 	}
 
 	@Override
