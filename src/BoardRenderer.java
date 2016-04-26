@@ -318,7 +318,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		this.repaint();
 	}
 
-	class NumberKeyboard extends JPopupMenu {
+	class NumberKeyboard extends JPopupMenu implements ActionListener {
 
 		private static final long serialVersionUID = 1L;
 
@@ -335,6 +335,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 					constraints.gridy = i;
 					constraints.gridwidth = 1;
 					constraints.gridheight = 1;
+					item.addActionListener(this);
 					this.add(item, constraints);
 				}
 			}
@@ -346,7 +347,18 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 			constraints.gridwidth = 3;
 			constraints.gridheight = 1;
 	        constraints.fill = GridBagConstraints.BOTH;
+	        item.addActionListener(this);
 			this.add(item, constraints);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand().equals("清除")){
+				contentQ[lastClick.y][lastClick.x] = 0; 
+			} else {
+				contentQ[lastClick.y][lastClick.x] = Integer.parseInt(e.getActionCommand()); 
+			}
+			this.repaint();
 		}
 	}
 	
@@ -382,7 +394,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		if (ENABLE_REMBER_LAST) {
 			if (((lastClick != null) && (lastClick.x == MOUSE_POS_X) && (lastClick.y == MOUSE_POS_Y))
 					|| (MOUSE_POS_X == -1) || (MOUSE_POS_Y == -1)) {
-				lastClick = null;
+				//使用右鍵選單不管是否為選取格子狀態都需要本次選取的格子資訊
+				//lastClick = null;
 			} else {
 				lastClick = new Point(MOUSE_POS_X, MOUSE_POS_Y);
 			}
