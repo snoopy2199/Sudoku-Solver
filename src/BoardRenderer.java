@@ -11,22 +11,24 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		SMALL_BOARD
 	}
 	
-	private int SIZE_WIDTH      = 600;   // 背景寬度
-	private int SIZE_HEIGHT     = 600;   // 背景高度
-	private int LOC_TOP         = 50;	 // 棋盤距離上方
-	private int LOC_LEFT        = 50;    // 棋盤距離左方
-	private int GRID_SIZE       = 60;    // 棋格大小
-	private int GRID_MIN        = 30;    // 棋盤最小偏移(距離邊界)
-	private int GRID_MAX        = 570;   // 棋盤最大偏移(距離邊界)
-	private float NORMAL_LINE   = 1.0f;  // 普通線寬度
-	private float SPLIT_LINE    = 2.0f;  // 特殊線寬度
-	private int MOUSE_POS_RAW_X 	= 0;     // 滑鼠X座標
-	private int MOUSE_POS_RAW_Y 	= 0;     // 滑鼠Y座標
-	private int MOUSE_POS_X     = -1;     // 滑鼠棋盤X位置
-	private int MOUSE_POS_Y     = -1;     // 滑鼠棋盤Y位置
-	private int BIG_FONT_SIZE   = 50;    // 棋盤數字大小
-	private int SMALL_FONT_SIZE 	= 12;    // 一般文字大小
-	private int BIG_FONT_OFFSET 	= 35;    // 棋盤數字偏移矯正
+	// == 畫面設計 == //
+	
+	private int SIZE_WIDTH      = 600;      // 背景寬度
+	private int SIZE_HEIGHT     = 600;      // 背景高度
+	private int LOC_TOP         = 50;	    // 棋盤距離上方
+	private int LOC_LEFT        = 50;       // 棋盤距離左方
+	private int GRID_SIZE       = 60;       // 棋格大小
+	private int GRID_MIN        = 30;       // 棋盤最小偏移(距離邊界)
+	private int GRID_MAX        = 570;      // 棋盤最大偏移(距離邊界)
+	private float NORMAL_LINE   = 1.0f;     // 普通線寬度
+	private float SPLIT_LINE    = 2.0f;     // 特殊線寬度
+	private int MOUSE_POS_RAW_X 	= 0;    // 滑鼠X座標
+	private int MOUSE_POS_RAW_Y 	= 0;    // 滑鼠Y座標
+	private int MOUSE_POS_X     = -1;       // 滑鼠棋盤X位置
+	private int MOUSE_POS_Y     = -1;       // 滑鼠棋盤Y位置
+	private int BIG_FONT_SIZE   = 50;       // 棋盤數字大小
+	private int SMALL_FONT_SIZE 	= 12;   // 一般文字大小
+	private int BIG_FONT_OFFSET 	= 35;   // 棋盤數字偏移矯正
 	private boolean HOVER_EFFECT       = true;  // 滑過是否高亮
 	private boolean ENABLE_REMBER_LAST = true;  // 是否紀錄最後按下的方塊
 	private boolean SHOW_INFO          = true;  // 是否顯示棋盤定位資訊
@@ -36,6 +38,8 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	private BasicStroke SPLIT_STROKE	  = new BasicStroke(SPLIT_LINE);
 	private Font BIG_FONT 	= new Font("TimesRoman", Font.PLAIN, BIG_FONT_SIZE);
 	private Font SMALL_FONT = new Font("TimesRoman", Font.PLAIN, SMALL_FONT_SIZE);
+	
+	// == 畫面資料 == //
 	
 	// 紀錄數值 0為空 1-9為顯示數字
 	private int[][] contentQ = new int[9][9];
@@ -47,7 +51,10 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	public BoardRenderer() {
 		resetBoard();
 	}
-
+	
+	/*
+	 * 根據棋盤類型(小棋盤or大棋盤)設定棋盤屬性
+	 */
 	public BoardRenderer(BoardType type) {
 		if (type == BoardType.MAIN_BOARD) {
 			SIZE_WIDTH  = 400;
@@ -70,8 +77,6 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 	}
 	
 	protected void resetBoard() {
-		this.removeMouseListener(this);
-		this.removeMouseMotionListener(this);
 		this.setBackground(Color.WHITE);
 		this.setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
