@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Sudoku implements Comparable<Sudoku> {
 	
 	//static
@@ -43,6 +45,7 @@ public class Sudoku implements Comparable<Sudoku> {
 		question = new int[9][9];
 	}
 	
+	/*
 	public int getFitnessValue() {
 		int sum = 0;
 		// 檢查直線
@@ -51,7 +54,7 @@ public class Sudoku implements Comparable<Sudoku> {
 			boolean [] hChecker = new boolean [9];
 			for (int j = 0; j < 9; j++) {
 				// 水平
-				if (question [i][j] == 0) {
+				if (question[i][j] == 0) {
 					if (answer[i][j] != 0) {
 						hChecker[answer[i][j] - 1] = true;
 					}
@@ -111,6 +114,96 @@ public class Sudoku implements Comparable<Sudoku> {
 			}
 		}
 		return sum;
+	}
+	*/
+	
+	public int getFitnessValue() {
+		int sum = 0;
+		
+		sum += countParallelPoint();
+		sum += countVerticalPoint();
+		sum += countJiugonggePoint();
+		
+		return sum;
+	}
+
+	
+	private int countJiugonggePoint() {
+		int sum = 0;
+		//選取九宮格
+		int[] dx = {0,0,0,1,1,1,2,2,2};
+		int[] dy = {0,1,2,0,1,2,0,1,2};
+		
+		for (int i = 0; i < 9; i+=3) {
+			for (int j = 0; j < 9; j+=3) {
+				//取出該線
+				int[] temList = new int [9];
+				
+				for (int index = 0; index < 9; index++) {
+					temList[index] = getNumber((dx[index] + i), (dy[index] + j));
+				}
+				
+				if (hasOneToNine(temList)) {
+					sum++;
+				}
+			}
+		}
+		return sum;
+	}
+	
+	private int countVerticalPoint() {
+		int sum = 0;
+		//選取垂直線
+		for (int j = 0; j < 9; j++) {
+			//取出該線
+			int[] temList = new int [9];
+			
+			for (int i = 0; i < 9; i++){
+				temList[i] = getNumber(i, j);
+			}
+			
+			if (hasOneToNine(temList)) {
+				sum++;
+			}
+		}
+		return sum;
+	}
+	
+	private int countParallelPoint() {
+		int sum = 0;
+		//選取水平線
+		for (int i = 0; i < 9; i++) {
+			//取出該線
+			int[] temList = new int [9];
+			
+			for (int j = 0; j < 9; j++){
+				temList[j] = getNumber(i, j);
+			}
+			
+			if (hasOneToNine(temList)) {
+				sum++;
+			}
+			
+		}
+		return sum;
+	}
+	
+	private int getNumber(int x, int y) {
+		if (question[x][y] != 0) {
+			return question[x][y];
+		}		
+		return answer[x][y];
+	}
+
+
+	private boolean hasOneToNine(int[] valueList) {
+		Arrays.sort(valueList);
+		for (int i = 0; i < 9; i++) {
+			if (valueList[i] != (i + 1)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// Comparable

@@ -20,22 +20,25 @@ public class ResultRenderer extends JPanel{
 	private int LOC_LEFT;
 	
 	//折線圖設定
-	private int CHART_WIDTH  = 160;     //折線圖寬度
-	private int CHART_HEIGHT = 140;     //折線圖高度
-	private int CHART_TOP    = 40;      //折線圖上方距離
-	private int CHART_LEFT   = 180;     //折線圖左方距離
-	private int ARROW_SIZE   = 10;      //箭頭大小
+	private int CHART_WIDTH  = 160;                 //折線圖寬度
+	private int CHART_HEIGHT = 140;                 //折線圖高度
+	private int CHART_TOP    = 40;                  //折線圖上方距離
+	private int CHART_LEFT   = 180;                 //折線圖左方距離
+	private int ARROW_SIZE   = 10;                  //箭頭大小
+	private int POINT_SIZE   = CHART_HEIGHT / -27 ; //資料傳換圖表刻度
 	
-	//秒數位置設定
-	private int TIME_LEFT = 360;
+	//文字資訊位置設定
+	private int INFO_LEFT = 360;
 	
 	//建立棋盤
 	private BoardRenderer smallBoard = new BoardRenderer(BoardRenderer.BoardType.SMALL_BOARD);
 	
 	// == 畫面資料 == //
 	
-	private int[] data = {};      //折線圖資料
-	private String second = "0";  //執行時間
+	private int[] data = {};         //折線圖資料
+	private String second = "0";     //執行時間
+	private int endPoint = 0;        //最終點數
+	private int generationCount = 0; //世代數量
 	
 	public ResultRenderer(int width, int height, int left, int top, String type) {
 		SIZE_HEIGHT = height;
@@ -69,15 +72,16 @@ public class ResultRenderer extends JPanel{
 		
 		//標題
 		g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
-		if (TYPE == "GA") {
+		if (TYPE.equals("GA")) {
 			g.drawString("基因演算法", 15, 30);
 		} else {
 			g.drawString("暴力破解法", 15, 30);
 		}
 		
-		
 		//底框
 		g.drawRoundRect(0, 0, SIZE_WIDTH-2, SIZE_HEIGHT-2, 40, 40);
+		
+		g.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
 		
 		//折線圖底圖
 		g.drawLine(CHART_LEFT, CHART_TOP, CHART_LEFT, CHART_TOP + CHART_HEIGHT);
@@ -87,12 +91,40 @@ public class ResultRenderer extends JPanel{
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT - ARROW_SIZE);
 		g.drawLine(CHART_LEFT + CHART_WIDTH,  CHART_TOP + CHART_HEIGHT, CHART_LEFT + CHART_WIDTH - ARROW_SIZE,  CHART_TOP + CHART_HEIGHT + ARROW_SIZE);
 		
-		//TODO:畫資料
-
+		g.drawString("point", CHART_LEFT - 15, CHART_TOP - 10);
+		g.drawString("times", CHART_LEFT + CHART_WIDTH + 10, CHART_TOP + CHART_HEIGHT);
+		
 		//秒數
 		//距離上方的高度固定為60
 		g.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
-		g.drawString("執行時間：" + second, TIME_LEFT, 60);
+		g.drawString("執行時間：" + second, INFO_LEFT, 60);
+		g.drawString("最終點數：" + endPoint, INFO_LEFT, 85);
+		
+		//根據圖表不同給予不同標題
+		if (TYPE.equals("GA")) {
+			g.drawString("世代數量：" + generationCount, INFO_LEFT, 110);
+		} else {
+			g.drawString("嘗試次數：" + generationCount, INFO_LEFT, 110);
+		}
+		
+		//圖表繪製顏色 紅色
+		g.setColor(Color.red);
+		
+		//有資料的時候執行
+		if (data.length > 0) {
+			//依照資料數量，分配橫軸刻度大小
+			float interval = CHART_WIDTH / data.length;
+			
+			//圖表資料繪製
+			for (int i = 0; i < data.length -1; i++) {
+				int startLeft = (int)(CHART_LEFT + interval * i);
+				int startTop = (int)(CHART_TOP + (data[i] - 27) * POINT_SIZE);
+				int endLeft = (int)(CHART_LEFT + interval * (i + 1));
+				int endTop = (int)(CHART_TOP + (data[i+1] - 27) * POINT_SIZE);
+				g.drawLine(startLeft, startTop, endLeft, endTop);
+			}
+		}
+		
 	}	
 	
 	//設定結束時間
@@ -103,7 +135,19 @@ public class ResultRenderer extends JPanel{
 	
 	//設定折線圖資料
 	public void setData(int[] data){
-		this.data = data;
+		this.data = data;	
+		this.repaint();
+	}
+	
+	//設定最終點數
+	public void setEndPoint(int point) {
+		endPoint = point;
+		this.repaint();
+	}
+	
+	//設定世代(執行)數量
+	public void setGenerationCount(int generationCount) {
+		this.generationCount = generationCount;
 		this.repaint();
 	}
 }
