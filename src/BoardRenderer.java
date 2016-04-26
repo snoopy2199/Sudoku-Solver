@@ -359,6 +359,7 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 				contentQ[lastClick.y][lastClick.x] = Integer.parseInt(e.getActionCommand()); 
 			}
 
+			lastClick = null;
 			BoardRenderer.this.repaint();
 		}
 	}
