@@ -180,7 +180,7 @@ public class GeneticAlgo implements Runnable {
 		int count = 0;
 		
 		//隨機挑選染色體切割點
-		int cutOfGene = (int)(Math.random()*(lengthOfGene-1))+1;
+		int cutOfGene = (int)(Math.random()*(lengthOfGene-2))+1;
 		
 		for (int i = 0; i < numberOfSelection; i++) {
 			for (int j = i+1; j < numberOfSelection; j++) {
