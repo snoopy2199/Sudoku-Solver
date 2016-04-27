@@ -188,15 +188,11 @@ public class GeneticAlgo implements Runnable {
 				int[] tempGene1 = new int[lengthOfGene]; 
 				int[] tempGene2 = new int[lengthOfGene]; 
 				
-				for (int k = 0; k < cutOfGene; k++){
-					tempGene1[k] = SelectedPopulations[i].gene[k];
-					tempGene2[k] = SelectedPopulations[j].gene[k];
-				}
+				System.arraycopy(SelectedPopulations[i].gene, 0, tempGene1, 0, cutOfGene);
+				System.arraycopy(SelectedPopulations[j].gene, cutOfGene, tempGene1, cutOfGene, lengthOfGene-cutOfGene);
 				
-				for (int k = cutOfGene; k < lengthOfGene; k++){
-					tempGene1[k] = SelectedPopulations[j].gene[k];
-					tempGene2[k] = SelectedPopulations[i].gene[k];
-				}
+				System.arraycopy(SelectedPopulations[j].gene, 0, tempGene2, 0, cutOfGene);
+				System.arraycopy(SelectedPopulations[i].gene, cutOfGene, tempGene2, cutOfGene, lengthOfGene-cutOfGene);
 
 				populations[count] = new Population(tempGene1);
 				populations[count+1] = new Population(tempGene2);
