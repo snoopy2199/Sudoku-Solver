@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class SudokuSolver extends JFrame implements ActionListener, ISudokuCallback{
+public class SudokuSolver extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 5121011014101155908L;
 	
@@ -24,7 +24,7 @@ public class SudokuSolver extends JFrame implements ActionListener, ISudokuCallb
 	private JButton resetBtn = new JButton("清除");
 	private JButton solveBtn = new JButton("解題");
 	private BruteForce bruteForce = new BruteForce();
-	//private GeneticAlgo geneticAlgo = new GeneticAlgo(callback, inputObject)
+	private GeneticAlgo geneticAlgo = new GeneticAlgo();
 	
 	
 	/*
@@ -137,18 +137,5 @@ public class SudokuSolver extends JFrame implements ActionListener, ISudokuCallb
 			// 基因演算法
 			// TODO
 		}
-	}
-	
-	// ISudokuCallback 可用來呼叫繪圖
-	@Override
-	public void onSolverUpdate(SolveData sloveDate) {
-		
-		
-	}
-
-	@Override
-	public void onSolverFinish(SolveData sloveDate) {
-		
-		
 	}
 }

@@ -245,14 +245,14 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 			if (((lastClick != null) && (lastClick.x == MOUSE_POS_X) && (lastClick.y == MOUSE_POS_Y))
 					|| (MOUSE_POS_X == -1) || (MOUSE_POS_Y == -1)) {
 			} else {
-				lastClick = new Point(MOUSE_POS_X, MOUSE_POS_Y);
-				
-				// 為記錄上次點選模式 且 按下右鍵
-				// 顯示數字鍵盤
-				if (ENABLE_REMBER_LAST && SwingUtilities.isRightMouseButton(arg0)) {
-				    doPop(arg0);
-				}
+				lastClick = new Point(MOUSE_POS_X, MOUSE_POS_Y);	
 			}
+		}
+		
+		// 為記錄上次點選模式 且 按下右鍵
+		// 顯示數字鍵盤
+		if (ENABLE_REMBER_LAST && SwingUtilities.isRightMouseButton(arg0)) {
+			doPop(arg0);
 		}
 		
 		this.repaint();
@@ -304,8 +304,6 @@ public class BoardRenderer extends JPanel implements MouseMotionListener, MouseL
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			if (lastClick == null) return; // 擋下已知的bug
 			
 			if (e.getActionCommand().equals("清除")){
 				// 清除
