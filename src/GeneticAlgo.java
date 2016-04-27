@@ -15,9 +15,9 @@ public class GeneticAlgo implements Runnable {
 	//fitness分數連續相同最高次數
 	private final int maxSamePointTimes = 30;
 	//突變染色體數量
-	private final int numOfMutationGene = 15;
+	private final int numOfMutationGene = 10;
 	//突變基因數量
-	private final int numOfChromosome = 10;
+	private final int numOfChromosome = 5;
 	
 	//空白格位置紀錄
 	private ArrayList<Point> questionLocation = new ArrayList<Point>();
@@ -250,32 +250,45 @@ public class GeneticAlgo implements Runnable {
 		return fitnessValues.get(fitnessValues.size()-1);
 	}
 	
+	/*
+	 * 取得最高分數
+	 * @回傳  最高分數
+	 */
 	public int getMaxPoint(){
 		int maxPoint = Collections.max(fitnessValues);
 		return maxPoint;
 	}
 	
 	/*
-	 * 
+	 * Population類別
 	 */
 	class Population implements Comparable<Population>{
 		int[] gene;
-		int point;
+		int point;   //fitnessValues
 		
+		/*
+		 * 建構子
+		 */
 		public Population() {}
-		
+
 		public Population(int[] gene) {
 			this.gene = gene;
 			fillAnswer();
 			point = Sudoku.get().getFitnessValue();
 		}
 		
+		/*
+		 * 將基因填入數獨
+		 */
 		private void fillAnswer() {
 			for (int i = 0; i < lengthOfGene; i++) {
 				Sudoku.get().setOneAnswer(questionLocation.get(i), gene[i]);
 			}
 		}
 		
+		/*
+		 * 用point作為比較依據
+		 */
 		@Override
 		public int compareTo(Population o) {
 			return point - o.point;
