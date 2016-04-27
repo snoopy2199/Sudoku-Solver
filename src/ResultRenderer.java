@@ -35,11 +35,19 @@ public class ResultRenderer extends JPanel{
 	
 	// == 畫面資料 == //
 	
-	private int[] data = {};         //折線圖資料
+	private Integer[] data = {};     //折線圖資料
 	private String second = "0";     //執行時間
 	private int endPoint = 0;        //最終點數
 	private int generationCount = 0; //世代數量
 	
+	/*
+	 * 建構子
+	 * @參數  width: 寬
+	 *      height: 高
+	 *      left: 與視窗最左端之距離
+	 *      top: 與視窗最上端之距離
+	 *      type: 面板類別 (GA-基因演算法, Force-暴力破解法)
+	 */
 	public ResultRenderer(int width, int height, int left, int top, String type) {
 		SIZE_HEIGHT = height;
 		SIZE_WIDTH = width;
@@ -57,6 +65,9 @@ public class ResultRenderer extends JPanel{
 		this.add(smallBoard);
 	}
 	
+	/*
+	 * 繪製
+	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
@@ -113,10 +124,10 @@ public class ResultRenderer extends JPanel{
 		//有資料的時候執行
 		if (data.length > 0) {
 			//依照資料數量，分配橫軸刻度大小
-			float interval = CHART_WIDTH / data.length;
+			double interval = (double)(CHART_WIDTH) / data.length;
 			
 			//圖表資料繪製
-			for (int i = 0; i < data.length -1; i++) {
+			for (int i = 0; i < data.length - 1; i++) {
 				int startLeft = (int)(CHART_LEFT + interval * i);
 				int startTop = (int)(CHART_TOP + (data[i] - 27) * POINT_SIZE);
 				int endLeft = (int)(CHART_LEFT + interval * (i + 1));
@@ -127,27 +138,49 @@ public class ResultRenderer extends JPanel{
 		
 	}	
 	
-	//設定結束時間
-	public void setResultTime(int second) {
-		this.second = String.valueOf(second);
+	/*
+	 * 設定結束時間
+	 * @參數  second: 結束時間(秒)
+	 */
+	public void setResultTime(double second) {
+		this.second = String.format("%.04f", second);
 		this.repaint();
 	}
 	
-	//設定折線圖資料
-	public void setData(int[] data){
+	/*
+	 * 設定折線圖資料
+	 * @參數  data: 繪圖資料 
+	 */
+	public void setData(Integer[] data){
 		this.data = data;	
 		this.repaint();
 	}
 	
-	//設定最終點數
+	/*
+	 * 設定最終點數
+	 * @參數 point: 最終點數
+	 */
 	public void setEndPoint(int point) {
 		endPoint = point;
 		this.repaint();
 	}
 	
-	//設定世代(執行)數量
+	/*
+	 * 設定世代(執行)數量
+	 * @參數  generationCount 執行次數
+	 */
 	public void setGenerationCount(int generationCount) {
 		this.generationCount = generationCount;
 		this.repaint();
+	}
+	
+	/*
+	 * 繪製棋盤
+	 * @參數  question: 題目陣列
+	 *      answer: 答案陣列
+	 */
+	public void showSudoku(int[][] question, int[][] answer) {
+		smallBoard.setContent(true, question);
+		smallBoard.setContent(false, answer);
 	}
 }
