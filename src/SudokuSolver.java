@@ -125,8 +125,10 @@ public class SudokuSolver extends JFrame implements ActionListener{
 		
 		// 按鈕"解題"
 		if (e.getSource() == solveBtn) {
-			// 暴力破解法
+			
 			Sudoku.get().setQuestion(mainBoard.getQuestion());
+			
+			// 暴力破解法
 			bruteForce.run();
 			forceResultRenderer.setResultTime(bruteForce.getCostTime());
 			forceResultRenderer.setEndPoint(bruteForce.getEndPoint());
@@ -135,7 +137,13 @@ public class SudokuSolver extends JFrame implements ActionListener{
 			forceResultRenderer.showSudoku(Sudoku.get().getQuestion(), Sudoku.get().getAnswer());
 			
 			// 基因演算法
-			// TODO
+			geneticAlgo.run();
+			gaResultRenderer.setResultTime(geneticAlgo.getCostTime());
+			gaResultRenderer.setEndPoint(geneticAlgo.getEndPoint());
+			gaResultRenderer.setGenerationCount(geneticAlgo.getTimes());
+			gaResultRenderer.setData(geneticAlgo.getFitnessValues());
+			gaResultRenderer.showSudoku(Sudoku.get().getQuestion(), Sudoku.get().getAnswer());
+
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import java.awt.Point;
 import java.util.Arrays;
 
-public class Sudoku implements Comparable<Sudoku> {
+public class Sudoku{
 	
 	private static Sudoku sudoku = null;
 	
@@ -214,11 +214,5 @@ public class Sudoku implements Comparable<Sudoku> {
 		}
 		
 		return null;
-	}
-
-	// Comparable
-	@Override
-	public int compareTo(Sudoku a) {
-		return a.getFitnessValue() - this.getFitnessValue();
 	}
 }
