@@ -6,8 +6,9 @@ import java.util.Set;
 
 public class BruteForce implements Runnable {
 
-	private double costTime;
-	private int times = 0;
+	private double costTime;   //執行時間
+	private int times = 0;     //執行次數
+	//記錄每次測試的fitness值
 	private ArrayList<Integer> fitnessValues = new ArrayList<Integer>();
 	
 	/*
