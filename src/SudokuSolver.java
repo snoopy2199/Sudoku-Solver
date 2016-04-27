@@ -143,6 +143,7 @@ public class SudokuSolver extends JFrame implements ActionListener{
 			gaResultRenderer.setGenerationCount(geneticAlgo.getTimes());
 			gaResultRenderer.setData(geneticAlgo.getFitnessValues());
 			gaResultRenderer.showSudoku(Sudoku.get().getQuestion(), Sudoku.get().getAnswer());
+			gaResultRenderer.setMaxPoint(geneticAlgo.getMaxPoint());
 
 		}
 	}

@@ -56,6 +56,9 @@ public class BruteForce implements Runnable {
 	 * @回傳  最終分數
 	 */
 	public int getEndPoint(){
+		if (fitnessValues.size() == 0) {
+			return 0;
+		}
 		return fitnessValues.get(fitnessValues.size()-1);
 	}
 	

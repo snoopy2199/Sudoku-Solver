@@ -1,21 +1,36 @@
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 public class GeneticAlgo implements Runnable {
 
-	private final int numberOfSelection = 20;
+	//挑選子代數量
+	private final int numberOfSelection = 20; 
+	//配對後的染色體數量
 	private final int numberOfPopulations = numberOfSelection * (numberOfSelection-1);
+	//演化跳脫次數
+	private final int endOfSelection = 1000;
+	//fitness分數連續相同最高次數
+	private final int maxSamePointTimes = 30;
+	//突變染色體數量
+	private final int numOfMutationGene = 15;
+	//突變基因數量
+	private final int numOfChromosome = 10;
 	
+	//空白格位置紀錄
 	private ArrayList<Point> questionLocation = new ArrayList<Point>();
-	private int lengthOfGene;
-	private Population[] populations;
-	private Population[] SelectedPopulations;
-	private int samePointTimes = 0;
 	
-	private double costTime;
-	private int times = 0;
+	private int lengthOfGene;                  //基因長度
+	private Population[] populations;          //目前染色體陣列
+	private Population[] SelectedPopulations;  //挑選出的子代陣列
+	private int samePointTimes = 0;            //fitness分數連續相同次數
+	
+	private double costTime;                   //總執行時間
+	private int times = 0;                     //世代數量
+	
+	//每代最高分數
 	private ArrayList<Integer> fitnessValues = new ArrayList<Integer>();
 	
 	/*
@@ -23,47 +38,79 @@ public class GeneticAlgo implements Runnable {
 	 */
 	@Override
 	public void run() {
-		// 初始化
-		Sudoku.get().clearAnswer();
+		
+		initialise();
+		
+		//紀錄開始時間
 		Date startTime = new Date();
+		
+		//執行基因演算法
+		doGA();
+
+		//計算總執行時間
+		Date endTime = new Date();
+		costTime = (endTime.getTime()-startTime.getTime())*0.001;
+	}
+	
+	/*
+	 * 初始化
+	 */
+	private void initialise() {
+		Sudoku.get().clearAnswer();
 		times = 0;
 		samePointTimes = 0;
 		fitnessValues = new ArrayList<Integer>();
 		questionLocation = new ArrayList<Point>();
+	}
+	
+	/*
+	 * 執行基因演算法
+	 */
+	private void doGA() {
+		defineChromosome();         //計算染色體長度
+		initialisePopulation();     //隨機產生初代
 		
-		defineChromosome();
-		initialisePopulation();
-		for(int i = 0; i < 1000; i++) {
-			doSelection();
-			doSort();
+		for(int i = 0; i < endOfSelection; i++) {
+			doSort();         //排序
+			doSelection();    //挑選
+			         
+			//若分數達到27，則完成基因演算法
 			if (populations[0].point == 27) {
 				populations[0].fillAnswer();
 				break;
 			}
 			
-			if (i != 0 && fitnessValues.get(fitnessValues.size()-1) == fitnessValues.get(fitnessValues.size()-2)) {
-				samePointTimes++;
+			//fitness分數是否持續相同
+			if (i != 0) {
+				int lastFitnessValue = fitnessValues.get(fitnessValues.size()-2);
+				int nowFitnessValue = fitnessValues.get(fitnessValues.size()-1);
+				if (lastFitnessValue == nowFitnessValue){
+					samePointTimes++;
+				}
 			} else {
 				samePointTimes = 0;
 			}
 			
-			if (samePointTimes == 20) {
+			//若fitness分數持續相同到maxSamePointTimes，則突變
+			if (samePointTimes == maxSamePointTimes) {
 				mutate();
+				samePointTimes = 0;
 			}
 			
+			//配對
 			crossover();
 			
-			if (i == 999){
+			//若執行代數為endOfSelection，則結束計算
+			//即使尚未找到最佳解
+			if (i == endOfSelection - 1){
 				Sudoku.get().clearAnswer();
 			}
 		}
-
-		Date endTime = new Date();
-		costTime = (endTime.getTime()-startTime.getTime())*0.001;
 	}
 
 	/*
-	 * 決定染色體
+	 * 決定染色體長度
+	 * 並且記錄空白位置
 	 */
 	private void defineChromosome() {
 		Point Point = Sudoku.get().getFirstBlank();
@@ -71,7 +118,7 @@ public class GeneticAlgo implements Runnable {
 		while (true) {
 			Point = Sudoku.get().getNextBlank(Point);
 			if (Point == null) {
-				break;
+				break; //找不到空白格則跳出
 			}
 			questionLocation.add(Point);
 		}
@@ -79,7 +126,7 @@ public class GeneticAlgo implements Runnable {
 	}
 	
 	/*
-	 * 初始化基因
+	 * 隨機產生初代基因
 	 */
 	private void initialisePopulation() {
 		populations = new Population[numberOfPopulations];
@@ -102,10 +149,11 @@ public class GeneticAlgo implements Runnable {
 	}
 	
 	/*
-	 * 挑選基因
+	 * 挑選基因(輪盤法)
 	 */
 	private void doSelection() {	
 		int sum = 0;
+		//加總所有點數作為random範圍
 		for (Population population : populations) {
 			sum += population.point;
 		}
@@ -130,6 +178,8 @@ public class GeneticAlgo implements Runnable {
 	 */
 	private void crossover() {
 		int count = 0;
+		
+		//隨機挑選染色體切割點
 		int cutOfGene = (int)(Math.random()*lengthOfGene);
 		
 		for (int i = 0; i < numberOfSelection; i++) {
@@ -160,8 +210,8 @@ public class GeneticAlgo implements Runnable {
 	 * 突變
 	 */
 	private void mutate() {
-		for (int numOfMutationGene = 0; numOfMutationGene < 10; numOfMutationGene++) {
-			for (int numOfChromosome = 0; numOfChromosome < 5; numOfChromosome++) {
+		for (int i = 0; i < numOfMutationGene; i++) {
+			for (int j = 0; j < numOfChromosome; j++) {
 				Population targetPopulation = SelectedPopulations[(int)(Math.random()*numberOfSelection)];
 				targetPopulation.gene[(int)(Math.random()*(lengthOfGene-1))] = (int)(Math.random()*9) + 1;
 			}
@@ -198,6 +248,11 @@ public class GeneticAlgo implements Runnable {
 	 */
 	public int getEndPoint(){
 		return fitnessValues.get(fitnessValues.size()-1);
+	}
+	
+	public int getMaxPoint(){
+		int maxPoint = Collections.max(fitnessValues);
+		return maxPoint;
 	}
 	
 	/*

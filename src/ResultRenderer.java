@@ -39,6 +39,8 @@ public class ResultRenderer extends JPanel{
 	private String second = "0";     //執行時間
 	private int endPoint = 0;        //最終點數
 	private int generationCount = 0; //世代數量
+	private int maxPoint = 0;        //最高點數
+	
 	
 	/*
 	 * 建構子
@@ -114,6 +116,7 @@ public class ResultRenderer extends JPanel{
 		//根據圖表不同給予不同標題
 		if (TYPE.equals("GA")) {
 			g.drawString("世代數量：" + generationCount, INFO_LEFT, 110);
+			g.drawString("最高點數：" + maxPoint, INFO_LEFT, 135);
 		} else {
 			g.drawString("嘗試次數：" + generationCount, INFO_LEFT, 110);
 		}
@@ -171,6 +174,15 @@ public class ResultRenderer extends JPanel{
 	 */
 	public void setGenerationCount(int generationCount) {
 		this.generationCount = generationCount;
+		this.repaint();
+	}
+	
+	/*
+	 * 設定最高點數
+	 * @參數  maxPoint 最高點數
+	 */
+	public void setMaxPoint(int maxPoint) {
+		this.maxPoint = maxPoint;
 		this.repaint();
 	}
 	
