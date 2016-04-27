@@ -6,7 +6,7 @@ public class Sudoku implements Comparable<Sudoku> {
 	private static Sudoku sudoku = null;
 	
 	private int[][] question = new int[9][9];
-	private int[][] answer 	  = new int[9][9];
+	private int[][] answer 	 = new int[9][9];
 	
 	public static Sudoku get() {
 		return sudoku == null ? sudoku = new Sudoku() : sudoku;
